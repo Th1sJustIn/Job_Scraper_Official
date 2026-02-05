@@ -3,8 +3,12 @@ import ollama
 import json
 from database.AI_connection.prompts import JOB_EXTRACTION_PROMPT
 import time
+import requests
 
 MODEL = "qwen2.5:3b"
+# MODEL = "qwen2.5:7b-instruct"
+
+OLLAMA_URL = " http://192.168.1.248:11434/api/chat"
 
 def extract_jobs_from_chunk(chunk):
     formatted_prompt = JOB_EXTRACTION_PROMPT.replace("{TEXT}", chunk)
@@ -13,13 +17,27 @@ def extract_jobs_from_chunk(chunk):
         if attempt == 1:
             time.sleep(0.3)
         try:
-            res = ollama.chat(
-                model=MODEL,
-                messages=[{"role": "user", "content": formatted_prompt}],
+            # res = ollama.chat(
+            #     model=MODEL,
+            #     messages=[{"role": "user", "content": formatted_prompt}],
                 
-            )
-
-            raw = res["message"]["content"]
+            # )
+            payload = {
+                "model": MODEL,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": formatted_prompt
+                    }
+                ],
+                "stream": False,
+                "options": {
+                    "temperature": 0.1
+                }
+            }
+            res = requests.post(OLLAMA_URL, json=payload)
+            raw = res.json()["message"]["content"]
+            print(raw)
             # Basic cleanup if the model creates Markdown code blocks
             clean_json = raw.strip()
             if clean_json.startswith("```json"):

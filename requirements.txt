@@ -1,0 +1,6 @@
+playwright
+beautifulsoup4
+markdownify
+python-dotenv
+supabase
+ollama

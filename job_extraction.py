@@ -86,13 +86,32 @@ def clean_jobs(ai_results, company_id, scrape_id, base_url):
 
             # Normalize URL if relative
             raw_url = job["job_url"].strip()
-            # If it's a relative path (starts with /), join with base domain
-            if raw_url.startswith("/"):
-                # Use urllib to join base_url and relative path
-                # "https://example.com/careers" + "/jobs/123" -> "https://example.com/jobs/123"
+
+            # Normalize URL if relative
+            raw_url = job["job_url"].strip()
+
+            if raw_url.startswith("http"):
+                job_url = raw_url
+            elif raw_url.startswith("/"):
+                # Root relative path (e.g. "/jobs/123")
                 job_url = urllib.parse.urljoin(base_url, raw_url)
             else:
-                job_url = raw_url
+                # STRICT PREFIX VALIDATION
+                # We only allow relative URLs that look like valid job paths.
+                # Allowed prefixes: /, ?, job, jobs, opening, openings
+                lower_url = raw_url.lower()
+                allowed_prefixes = ("/", "?", "job", "jobs", "opening", "openings")
+                
+                if not lower_url.startswith(allowed_prefixes):
+                     error_messages.append(f"Skipping job: Invalid relative URL prefix. Must start with {allowed_prefixes}. URL: {raw_url}")
+                     continue
+
+                # Ensure base_url has trailing slash so we append to the current path instead of replacing it
+                # Logic:
+                # If starts with '/', urljoin ignores base path (standard behavior) -> GOOD
+                # If starts with 'job...', we want to append, so base must end with '/' -> GOOD
+                base_to_use = base_url if base_url.endswith("/") else base_url + "/"
+                job_url = urllib.parse.urljoin(base_to_use, raw_url)
 
             if not valid_job_url(job_url):
                  error_messages.append(f"Skipping job: Invalid URL (validation failed). URL: {job_url}")

@@ -8,7 +8,9 @@ def get_career_page_url(career_page_id: int) -> str:
     response = supabase.table("career_pages").select("url").eq("id", career_page_id).execute()
     return response.data[0]["url"]
 
-def get_career_pages() -> list[dict]:
+from typing import Optional, List, Dict, Any
+
+def get_career_pages() -> List[Dict]:
     """Get all career pages from the database."""
     response = supabase.table("career_pages").select("*").execute()
     return response.data
@@ -22,7 +24,7 @@ def create_scrape_job(career_page_id: int) -> int:
 
     return response.data[0]["id"]
 
-def update_scrape_job(scrape_id: int, raw_html: str, markdown: str, chunks: list, chunk_count: int, html_hash: str = None):
+def update_scrape_job(scrape_id: int, raw_html: str, markdown: str, chunks: List, chunk_count: int, html_hash: str = None):
     """Update a scrape job with results and mark as 'completed'."""
     supabase.table("scrapes").update({
         "raw_html": raw_html,
@@ -47,8 +49,6 @@ def update_scrape_status(scrape_id: int, status: str):
     }).eq("id", scrape_id).execute()
 
 from datetime import datetime, timedelta, timezone
-
-from typing import Optional
 
 def get_latest_scrape_hash(career_page_id: int) -> Optional[str]:
     """Get the html_hash of the latest successful scrape for a career page."""
@@ -79,12 +79,12 @@ def is_recently_scraped(career_page_id: int, hours: int = 20) -> bool:
     
     return len(response.data) > 0
 
-def get_cleaned_scrapes() -> list[dict]:
+def get_cleaned_scrapes() -> List[Dict]:
     """Get all scrapes with status 'cleaned'."""
     response = supabase.table("scrapes").select("id, chunks_json, chunk_count, career_pages(company_id)").eq("status", "cleaned").execute()
     return response.data
 
-def insert_jobs(jobs_data: list[dict]):
+def insert_jobs(jobs_data: List[Dict]):
     """
     Insert or update jobs in the database.
     Expects a list of dicts matching the 'jobs' table schema.

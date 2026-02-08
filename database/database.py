@@ -108,7 +108,7 @@ def fetch_next_ready_job() -> Optional[dict]:
     Uses optimistic locking pattern.
     """
     # Fetch a candidate
-    candidates = supabase.table("scrapes").select("id, chunks_json, chunk_count, career_pages(company_id)")\
+    candidates = supabase.table("scrapes").select("id, chunks_json, chunk_count, career_pages(company_id, url)")\
         .eq("status", "cleaned")\
         .limit(1)\
         .execute()

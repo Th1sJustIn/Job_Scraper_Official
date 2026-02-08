@@ -60,7 +60,9 @@ def clean_title(title):
 
     return title.strip()
 
-def clean_jobs(ai_results, company_id, scrape_id):
+import urllib.parse
+
+def clean_jobs(ai_results, company_id, scrape_id, base_url):
     cleaned = []
     error_messages = []
     seen = set()
@@ -72,17 +74,6 @@ def clean_jobs(ai_results, company_id, scrape_id):
         if isinstance(job, dict) and job.get("job_url") and isinstance(job["job_url"], str):
              job["job_url"] = unwrap_markdown_url(job["job_url"].strip())
 
-    # Calculate average URL length for this batch
-    # valid_urls_lens = []
-    # for job in ai_results:
-    #     if isinstance(job, dict) and job.get("job_url") and isinstance(job["job_url"], str):
-    #          valid_urls_lens.append(len(job["job_url"].strip()))
-    
-    # if valid_urls_lens:
-    #     avg_len = sum(valid_urls_lens) / len(valid_urls_lens)
-    # else:
-    #     avg_len = 0
-
     for job in ai_results:
         try:
             if not isinstance(job, dict):
@@ -93,13 +84,23 @@ def clean_jobs(ai_results, company_id, scrape_id):
                 error_messages.append(f"Skipping job: Missing title or url. Data provided: {job}")
                 continue
 
-            if not valid_job_url(job["job_url"]):
-                 error_messages.append(f"Skipping job: Invalid URL (validation failed). URL: {job['job_url']}")
+            # Normalize URL if relative
+            raw_url = job["job_url"].strip()
+            # If it's a relative path (starts with /), join with base domain
+            if raw_url.startswith("/"):
+                # Use urllib to join base_url and relative path
+                # "https://example.com/careers" + "/jobs/123" -> "https://example.com/jobs/123"
+                job_url = urllib.parse.urljoin(base_url, raw_url)
+            else:
+                job_url = raw_url
+
+            if not valid_job_url(job_url):
+                 error_messages.append(f"Skipping job: Invalid URL (validation failed). URL: {job_url}")
                  continue
 
-            key = (company_id, job["job_url"])
+            key = (company_id, job_url)
             if key in seen:
-                error_messages.append(f"Skipping job: Duplicate in batch. URL: {job['job_url']}")
+                error_messages.append(f"Skipping job: Duplicate in batch. URL: {job_url}")
                 continue
             seen.add(key)
 
@@ -110,8 +111,6 @@ def clean_jobs(ai_results, company_id, scrape_id):
             if not job_title:
                  error_messages.append(f"Skipping job: Title became empty after normalization. Original: {job['title']}")
                  continue
-
-            job_url = job["job_url"].strip()
             
             if isinstance(job.get("location"), list):
                 location = ", ".join([str(l) for l in job["location"] if l]).strip()
@@ -149,9 +148,13 @@ def process_scrape(scrape):
     # Get company_id safe access
     career_pages = scrape.get("career_pages") or {}
     company_id = career_pages.get("company_id")
+    career_page_url = career_pages.get("url")
     
     if not company_id:
         raise ValueError(f"Missing company_id for scrape {scrape_id}")
+        
+    if not career_page_url:
+        print(f"Warning: career_page_url missing for scrape {scrape_id}. Relative URLs may fail.")
 
     print(f"\nProcessing Scrape ID: {scrape_id} (Company ID: {company_id})")
     print(f"Chunk Count: {chunk_count}")
@@ -166,7 +169,7 @@ def process_scrape(scrape):
                 all_jobs.extend(job_listings)
     
     # Clean jobs
-    cleaned_jobs, errors = clean_jobs(all_jobs, company_id, scrape_id)
+    cleaned_jobs, errors = clean_jobs(all_jobs, company_id, scrape_id, career_page_url)
     
     print(f"  Extracted {len(all_jobs)} raw jobs.")
     print(f"  Cleaned {len(cleaned_jobs)} valid jobs.")

@@ -4,3 +4,4 @@ markdownify
 python-dotenv
 supabase
 ollama
+lxml

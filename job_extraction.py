@@ -244,8 +244,8 @@ def extract_jobs():
                 
             except Exception as e:
                 print(f"  Error processing scrape {scrape.get('id')}: {e}")
-                fail_scrape_job(scrape.get("id"), str(e))
-                print(f"  Updated scrape {scrape.get('id')} status to 'failed'.")
+                fail_scrape_job(scrape.get("id"), str(e), status="core_extraction_failed")
+                print(f"  Updated scrape {scrape.get('id')} status to 'core_extraction_failed'.")
                 
         except Exception as e:
             # Global loop error handler to prevent crashing

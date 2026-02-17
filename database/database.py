@@ -35,10 +35,10 @@ def update_scrape_job(scrape_id: int, raw_html: str, markdown: str, chunks: List
         "status": "cleaned"
     }).eq("id", scrape_id).execute()
 
-def fail_scrape_job(scrape_id: int, error_message: str):
-    """Mark a scrape job as 'failed' with an error message."""
+def fail_scrape_job(scrape_id: int, error_message: str, status: str = "failed"):
+    """Mark a scrape job as failed with an error message and status."""
     supabase.table("scrapes").update({
-        "status": "failed",
+        "status": status,
         "error_message": error_message
     }).eq("id", scrape_id).execute()
 
@@ -188,4 +188,3 @@ def fetch_next_scrape_job() -> Optional[dict]:
             return res.data[0]
 
     return None
-

@@ -49,7 +49,13 @@ Non-success mapping:
 - `403/429` or anti-bot patterns -> `blocked`
 - other failures -> `failed`
 
-## 5. Edit Location for ATS Caps
+## 5. Data Cleaning
+The worker performs specific HTML cleaning before storage:
+- Removes standard noise tags (`script`, `style`, `noscript`, `svg`, `canvas`, `iframe`, `header`, `footer`, `nav`)
+- Removes specific unwanted elements (e.g., `.iti__country-list` dropdowns)
+- Normalizes whitespace
+
+## 6. Edit Location for ATS Caps
 Global ATS caps and pacing are editable in:
 - `provider_fetch_control` table (`max_in_flight`, `base_delay_ms`, `jitter_max_ms`)
 

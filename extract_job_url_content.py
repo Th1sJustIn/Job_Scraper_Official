@@ -45,6 +45,11 @@ def clean_html(html):
     for tag in REMOVE_TAGS:
         for element in soup.find_all(tag):
             element.decompose()
+    
+    # Remove specific unwanted elements
+    for element in soup.select(".iti__country-list"):
+        element.decompose()
+        
     return str(soup)
 
 
@@ -89,12 +94,11 @@ def is_blocked(status_code, html):
 
     lowered = (html or "").lower()
     markers = (
-        "captcha",
-        "cloudflare",
         "attention required",
         "access denied",
         "robot check",
         "verify you are human",
+        "security check"
     )
     return any(marker in lowered for marker in markers)
 

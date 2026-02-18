@@ -43,6 +43,7 @@
 10. Documentation updates required after PR changes
 - After every PR, update the relevant documentation sections/files to match the merged code behavior.
 - Documentation updates are part of done criteria for each PR.
+- `docs/CAUGHT_ERRORS_REFERENCE.md` must be updated in every PR when error handling changes or new catches are added.
 
 11. Docs-first rule for fixes/features
 - For every fix or feature request, consult the relevant docs file(s) before making changes.

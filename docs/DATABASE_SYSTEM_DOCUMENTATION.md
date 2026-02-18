@@ -30,6 +30,7 @@ Migrations (current repository order):
 5. `20250201195600_create_jobs.sql`
 6. `20260208120000_auto_create_scrape_job.sql`
 7. `20260218123000_create_scrape_log_events.sql`
+8. `20260218180000_job_url_content_worker_system.sql`
 
 Operational note:
 - trigger-based queue initialization depends on both `career_pages` and `scrapes` existing.
@@ -95,6 +96,8 @@ Definition:
   - `raw_scrape_id`
 - lifecycle:
   - `status` default `open`
+  - `content_status` default `open` (`open|job_extracting|job_extracted`)
+  - `content_status_updated_at`
   - `first_seen_at`, `last_seen_at`
 - unique `(company_id, url)`
 
@@ -120,6 +123,47 @@ Definition:
 
 Role:
 - immutable operational event log for pipeline visibility and audit trail
+
+## 4.6 `job_page_fetches`
+Definition:
+- PK `id` BIGINT identity
+- FK `job_id` -> `jobs.id` (unique)
+- URL/provider metadata:
+  - `job_url`
+  - `provider_bucket`
+  - `host`
+- result/status fields:
+  - `status` (`queued|extracting|extracted|failed|gone|blocked`)
+  - `exists_verified`
+  - `http_status`
+  - `final_url`
+  - `content_type`
+  - `raw_html`
+  - `markdown`
+  - `html_hash`
+  - `error_message`
+  - `worker_run_id`
+- timestamps:
+  - `created_at`, `updated_at`, `extracted_at`
+
+Role:
+- queue execution record + content payload for `jobs.url` extraction
+
+## 4.7 `provider_fetch_control`
+Definition:
+- PK `provider_bucket`
+- throttle controls:
+  - `max_in_flight`
+  - `base_delay_ms`
+  - `jitter_max_ms`
+- runtime counters:
+  - `in_flight`
+  - `next_allowed_at`
+  - `last_outcome`
+  - `updated_at`
+
+Role:
+- globally shared ATS cap/pacing settings editable in Supabase SQL editor
 
 ---
 
@@ -181,6 +225,19 @@ Runtime statuses actively used by workers:
 Legacy/default status:
 - `fetched` (table default in initial migration; typically bypassed by worker trigger/update flow)
 
+## 6.1 Queue-State Semantics (`jobs.content_status`)
+
+Runtime statuses:
+- `open`
+- `job_extracting`
+- `job_extracted`
+
+Ownership:
+- job URL content worker claim function: `open -> job_extracting`
+- job URL content completion function:
+  - `job_extracting -> job_extracted` on success
+  - `job_extracting -> open` on failed/gone/blocked
+
 ---
 
 ## 7. State Machine and Worker Ownership
@@ -240,6 +297,11 @@ Benefits:
 Known caveat:
 - interrupted site-content worker rows in `extracting` are automatically reclaimed when older than 30 minutes.
 - `core_extracting` rows still require manual recovery if workers crash mid-run.
+
+Additional model for `jobs.url` worker:
+- atomic DB function claim (`claim_next_job_page_fetch`) with optimistic lock on `jobs.content_status`
+- global ATS caps and pacing enforced via row-level lock on `provider_fetch_control`
+- completion function (`complete_job_page_fetch`) releases in-flight slot and advances `jobs.content_status`
 
 ---
 

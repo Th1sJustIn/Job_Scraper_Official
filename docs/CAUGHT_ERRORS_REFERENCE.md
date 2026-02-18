@@ -102,6 +102,48 @@ This file lists the current error paths that are explicitly caught in the codeba
 - suppresses cleanup exception
 - attempts fresh browser launch and continues loop
 
+## `extract_job_url_content.py`
+
+### Navigation wait fallback catches
+- Location: `navigate_and_capture(...)` inner `except Exception` blocks
+- Trigger:
+- `networkidle` timeout/failure after `domcontentloaded`
+- selector wait misses/failures during fallback (`main`, `[role='main']`, `section`, `body`)
+- Behavior:
+- suppresses wait-stage errors
+- falls back to next readiness strategy
+- still captures page HTML for existence/content handling
+
+### Per-job fetch catch
+- Location: `process_job_content(...)` `except Exception as e`
+- Trigger: any unhandled error during page fetch, validation, conversion, hashing, or completion writeback
+- Behavior:
+- logs error
+- marks job-page fetch as `failed` through DB completion function
+- resets `jobs.content_status` back to `open` (requeue)
+- returns a boolean that can trigger browser recycle for fatal browser-close style errors
+
+### Context close cleanup catch
+- Location: `process_job_content(...)` `finally` inner `except Exception`
+- Trigger: Playwright context close failure during cleanup
+- Behavior:
+- suppresses cleanup exception
+- prevents cleanup errors from interrupting worker loop
+
+### Global worker loop catch
+- Location: `run_worker()` `except Exception as e`
+- Trigger: unexpected loop-level failures
+- Behavior:
+- logs `Global worker error`
+- sleeps 7 seconds and continues loop
+
+### Browser close cleanup catch
+- Location: `run_worker()` recycle path inner `except Exception`
+- Trigger: Playwright browser close failure during browser recycle
+- Behavior:
+- suppresses cleanup exception
+- attempts fresh browser launch and continues loop
+
 ## `database/database.py`
 
 ### Structured event persistence catch
@@ -136,6 +178,7 @@ This file lists the current error paths that are explicitly caught in the codeba
 - `Error extracting jobs from AI (attempt X/2)` -> `database/AI_connection/AI.py` retry catch
 - `Error processing scrape ...` (job extraction worker) -> `job_extraction.py` per-scrape catches -> status `core_extraction_failed`
 - `Global worker error:` -> `extract_site_content.py` loop catch
+- `Global worker error:` (job URL worker) -> `extract_job_url_content.py` loop catch
 - `Unexpected global error:` -> `job_extraction.py` loop catch
 - `Warning: failed to persist scrape event for scrape ...` -> `database/database.py::log_scrape_event(...)` catch
 - `Error: File '...' not found.` -> `import_companies.py` file-not-found catch

@@ -213,7 +213,8 @@ Responsibilities:
 - Persist results to `job_page_fetches`.
 - Completion transition:
   - success -> `job_extracted`
-  - failed/gone/blocked -> `open` (requeue)
+  - first failed/gone/blocked -> `open` (single retry)
+  - second failed/gone/blocked -> mark fetch `gone` and set `jobs.status='closed'`
 
 ---
 

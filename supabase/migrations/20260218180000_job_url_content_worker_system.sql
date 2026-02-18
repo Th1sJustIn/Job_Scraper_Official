@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS job_page_fetches (
     raw_html TEXT,
     markdown TEXT,
     html_hash TEXT,
+    attempt_count INTEGER NOT NULL DEFAULT 0,
     error_message TEXT,
     worker_run_id TEXT,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
@@ -146,7 +147,10 @@ BEGIN
               SELECT 1
               FROM job_page_fetches jpf
               WHERE jpf.job_id = j.id
-                AND jpf.status = 'extracted'
+                AND (
+                    jpf.status IN ('extracted', 'gone')
+                    OR jpf.attempt_count >= 2
+                )
           )
         ORDER BY j.last_seen_at DESC, j.id ASC
         LIMIT 200
@@ -189,6 +193,7 @@ BEGIN
             provider_bucket,
             host,
             status,
+            attempt_count,
             worker_run_id,
             updated_at
         )
@@ -198,6 +203,7 @@ BEGIN
             selected_bucket,
             candidate.candidate_host,
             'extracting',
+            1,
             p_worker_run_id,
             now()
         )
@@ -207,6 +213,7 @@ BEGIN
             provider_bucket = EXCLUDED.provider_bucket,
             host = EXCLUDED.host,
             status = 'extracting',
+            attempt_count = job_page_fetches.attempt_count + 1,
             worker_run_id = EXCLUDED.worker_run_id,
             error_message = NULL,
             updated_at = now()
@@ -253,6 +260,8 @@ DECLARE
     control_row provider_fetch_control%ROWTYPE;
     delay_ms INTEGER;
     next_status TEXT;
+    next_job_status TEXT;
+    final_fetch_status TEXT;
 BEGIN
     IF p_status NOT IN ('extracted', 'failed', 'gone', 'blocked') THEN
         RAISE EXCEPTION 'Invalid completion status: %', p_status;
@@ -274,9 +283,23 @@ BEGIN
     WHERE provider_bucket = fetch_row.provider_bucket
     FOR UPDATE;
 
+    final_fetch_status := p_status;
+    next_status := 'open';
+    next_job_status := 'open';
+
+    IF p_status = 'extracted' THEN
+        final_fetch_status := 'extracted';
+        next_status := 'job_extracted';
+        next_job_status := 'open';
+    ELSIF fetch_row.attempt_count >= 2 THEN
+        final_fetch_status := 'gone';
+        next_status := 'open';
+        next_job_status := 'closed';
+    END IF;
+
     UPDATE job_page_fetches
     SET
-        status = p_status,
+        status = final_fetch_status,
         exists_verified = COALESCE(p_exists_verified, FALSE),
         http_status = p_http_status,
         final_url = p_final_url,
@@ -286,17 +309,12 @@ BEGIN
         html_hash = p_html_hash,
         error_message = p_error_message,
         updated_at = now(),
-        extracted_at = CASE WHEN p_status = 'extracted' THEN now() ELSE extracted_at END
+        extracted_at = CASE WHEN final_fetch_status = 'extracted' THEN now() ELSE extracted_at END
     WHERE id = p_fetch_id;
-
-    IF p_status = 'extracted' THEN
-        next_status := 'job_extracted';
-    ELSE
-        next_status := 'open';
-    END IF;
 
     UPDATE jobs
     SET
+        status = next_job_status,
         content_status = next_status,
         content_status_updated_at = now()
     WHERE id = fetch_row.job_id;
@@ -308,7 +326,7 @@ BEGIN
         SET
             in_flight = GREATEST(in_flight - 1, 0),
             next_allowed_at = now() + ((delay_ms::TEXT || ' milliseconds')::INTERVAL),
-            last_outcome = p_status,
+            last_outcome = final_fetch_status,
             updated_at = now()
         WHERE provider_bucket = fetch_row.provider_bucket;
     END IF;

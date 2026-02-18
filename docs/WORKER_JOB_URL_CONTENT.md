@@ -23,9 +23,14 @@ Atomic claim:
 Completion:
 - SQL function `complete_job_page_fetch(...)`:
   - updates `job_page_fetches` terminal status (`extracted|failed|gone|blocked`)
+  - increments/uses `attempt_count` to enforce retry policy
   - updates `jobs.content_status`:
     - `job_extracted` on `extracted`
-    - `open` on `failed|gone|blocked`
+    - `open` on first non-success (`failed|gone|blocked`) so one retry is allowed
+  - after second non-success attempt:
+    - force terminal `job_page_fetches.status='gone'`
+    - set `jobs.status='closed'`
+    - keep `jobs.content_status='open'` (non-claimable due to closed status)
   - decrements provider `in_flight` and sets next allowed request time.
 
 ## 3. Runtime Safeguards

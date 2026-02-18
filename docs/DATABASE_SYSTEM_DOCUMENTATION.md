@@ -134,6 +134,7 @@ Definition:
   - `host`
 - result/status fields:
   - `status` (`queued|extracting|extracted|failed|gone|blocked`)
+  - `attempt_count`
   - `exists_verified`
   - `http_status`
   - `final_url`
@@ -236,7 +237,8 @@ Ownership:
 - job URL content worker claim function: `open -> job_extracting`
 - job URL content completion function:
   - `job_extracting -> job_extracted` on success
-  - `job_extracting -> open` on failed/gone/blocked
+  - `job_extracting -> open` on first failed/gone/blocked attempt
+  - second failed/gone/blocked attempt forces terminal `job_page_fetches.status='gone'` and sets `jobs.status='closed'`
 
 ---
 

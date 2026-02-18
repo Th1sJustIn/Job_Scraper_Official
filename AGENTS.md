@@ -51,3 +51,14 @@
 - `docs/WORKER_EXTRACT_SITE_CONTENT.md`
 - `docs/WORKER_JOB_EXTRACTION.md`
 - Use `docs/DATABASE_SYSTEM_DOCUMENTATION.md` when changing schema, status flow, triggers, or DB access patterns.
+
+12. No unrequested scope in plans
+- Do not add extra plan items beyond the user's request unless explicitly approved first.
+
+13. Stop before PR flow
+- Stop before commit/push/PR and leave local edits for review.
+- Share exactly what changed with file references, then wait for confirmation.
+
+14. File responsibility boundaries
+- Anything dealing with database access/status updates belongs in `database/database.py`.
+- Anything dealing with AI connection/setup belongs in `database/AI_connection/AI.py`.

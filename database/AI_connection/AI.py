@@ -4,11 +4,34 @@ import json
 from database.AI_connection.prompts import JOB_EXTRACTION_PROMPT
 import time
 import requests
+import subprocess
+from urllib.parse import urlparse
 
 MODEL = "qwen2.5:3b"
 # MODEL = "qwen2.5:7b-instruct"
 
 OLLAMA_URL = " http://192.168.1.248:11434/api/chat"
+
+
+class LLMConnectionError(Exception):
+    """Raised when the worker cannot reach the LLM server."""
+    pass
+
+
+def ensure_llm_server_available():
+    parsed = urlparse(OLLAMA_URL.strip())
+    if not parsed.scheme or not parsed.netloc:
+        raise LLMConnectionError(f"Invalid OLLAMA_URL configured: {OLLAMA_URL!r}")
+
+    tags_url = f"{parsed.scheme}://{parsed.netloc}/api/tags"
+    result = subprocess.run(
+        ["curl", "--silent", "--show-error", "--fail", "--max-time", "5", tags_url],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        stderr = (result.stderr or "").strip()
+        raise LLMConnectionError(f"LLM connectivity check failed for {tags_url}: {stderr}")
 
 def extract_jobs_from_chunk(chunk):
     formatted_prompt = JOB_EXTRACTION_PROMPT.replace("{TEXT}", chunk)

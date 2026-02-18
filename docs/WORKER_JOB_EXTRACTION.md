@@ -47,7 +47,7 @@ For each claimed scrape:
 6. Set scrape status to `core_extracted` on success.
 
 If any exception escapes processing:
-- set scrape status to `failed`
+- set scrape status to `core_extraction_failed`
 - persist `error_message`
 
 ---
@@ -127,7 +127,7 @@ Input status consumed:
 Transitions:
 1. `cleaned -> core_extracting` (claim lock)
 2. `core_extracting -> core_extracted` (success)
-3. `core_extracting -> failed` (error path)
+3. `core_extracting -> core_extraction_failed` (error path)
 
 Downstream meaning:
 - `core_extracted` marks scrape as fully processed for current cycle.
@@ -143,10 +143,16 @@ Per-scrape:
 - inner `try/except` around `process_scrape`
 - on exception:
   - log error
-  - `fail_scrape_job(scrape_id, error)`
+  - `fail_scrape_job(scrape_id, error, status="core_extraction_failed")`
+
+LLM connectivity preflight:
+- before chunk extraction, worker checks LLM server with `GET /api/tags`
+- endpoint is derived from `OLLAMA_URL` host/port
+- if connectivity check fails:
+  - scrape is marked `core_extraction_failed`
+  - worker sleeps 60 seconds before next run
 
 Granularity limitations:
-- failure status is generic `failed` (no stage-specific value in current code path)
 - no explicit dead-letter queue
 
 ---
@@ -222,4 +228,3 @@ High-value improvements:
 - `docs/DATABASE_SYSTEM_DOCUMENTATION.md`
 - `docs/WORKER_IMPORT_COMPANIES.md`
 - `docs/WORKER_EXTRACT_SITE_CONTENT.md`
-

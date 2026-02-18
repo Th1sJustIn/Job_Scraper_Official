@@ -1,6 +1,10 @@
 import time
 from database.database import get_cleaned_scrapes, insert_jobs, update_scrape_status, fetch_next_ready_job, fail_scrape_job
-from database.AI_connection.AI import extract_jobs_from_chunk
+from database.AI_connection.AI import (
+    extract_jobs_from_chunk,
+    ensure_llm_server_available,
+    LLMConnectionError,
+)
 import json
 import hashlib
 
@@ -177,6 +181,8 @@ def process_scrape(scrape):
 
     print(f"\nProcessing Scrape ID: {scrape_id} (Company ID: {company_id})")
     print(f"Chunk Count: {chunk_count}")
+
+    ensure_llm_server_available()
     
     all_jobs = []
     
@@ -241,11 +247,18 @@ def extract_jobs():
                 # Success
                 update_scrape_status(scrape.get("id"), "core_extracted")
                 print(f"  Updated scrape {scrape.get('id')} status to 'core_extracted'.")
-                
+
+            except LLMConnectionError as e:
+                print(f"  Error processing scrape {scrape.get('id')}: {e}")
+                fail_scrape_job(scrape.get("id"), str(e), status="core_extraction_failed")
+                print(f"  Updated scrape {scrape.get('id')} status to 'core_extraction_failed'.")
+                print("  LLM check failed. Sleeping 60 seconds before next run.")
+                time.sleep(60)
+
             except Exception as e:
                 print(f"  Error processing scrape {scrape.get('id')}: {e}")
-                fail_scrape_job(scrape.get("id"), str(e))
-                print(f"  Updated scrape {scrape.get('id')} status to 'failed'.")
+                fail_scrape_job(scrape.get("id"), str(e), status="core_extraction_failed")
+                print(f"  Updated scrape {scrape.get('id')} status to 'core_extraction_failed'.")
                 
         except Exception as e:
             # Global loop error handler to prevent crashing

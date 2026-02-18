@@ -61,6 +61,16 @@ This file lists the current error paths that are explicitly caught in the codeba
 
 ## `extract_site_content.py`
 
+### Navigation wait fallback catches
+- Location: `navigate_and_capture_html(...)` inner `except Exception` blocks
+- Trigger:
+- `networkidle` timeout/failure after `domcontentloaded`
+- selector wait misses/failures during fallback (`main`, `[role='main']`, `section`, `body`)
+- Behavior:
+- suppresses wait-stage errors
+- falls back to next readiness strategy
+- still captures page HTML for downstream processing
+
 ### Per-scrape job catch
 - Location: `process_scrape_job(...)` `except Exception as e`
 - Trigger: any error during page fetch, parsing, normalization, chunking, or DB update
@@ -68,6 +78,14 @@ This file lists the current error paths that are explicitly caught in the codeba
 - logs error
 - logs structured event (`event_type="scrape_failed"`) via `log_scrape_event(...)`
 - marks scrape as failed via `fail_scrape_job(scrape_id, str(e))` (default status: `failed`)
+- returns a boolean that can trigger browser recycle for fatal browser-close style errors
+
+### Context close cleanup catch
+- Location: `process_scrape_job(...)` `finally` inner `except Exception`
+- Trigger: Playwright context close failure during cleanup
+- Behavior:
+- suppresses cleanup exception
+- prevents cleanup errors from interrupting worker loop
 
 ### Global worker loop catch
 - Location: `run_worker()` `except Exception as e`
@@ -76,6 +94,13 @@ This file lists the current error paths that are explicitly caught in the codeba
 - logs `Global worker error`
 - if job context exists, logs structured event (`event_type="worker_error"`) via `log_scrape_event(...)`
 - sleeps 7 seconds and continues loop
+
+### Browser close cleanup catch
+- Location: `run_worker()` recycle path inner `except Exception`
+- Trigger: Playwright browser close failure during browser recycle
+- Behavior:
+- suppresses cleanup exception
+- attempts fresh browser launch and continues loop
 
 ## `database/database.py`
 

@@ -29,6 +29,7 @@ Migrations (current repository order):
 4. `20250201132500_add_company_name_to_scrapes.sql`
 5. `20250201195600_create_jobs.sql`
 6. `20260208120000_auto_create_scrape_job.sql`
+7. `20260218123000_create_scrape_log_events.sql`
 
 Operational note:
 - trigger-based queue initialization depends on both `career_pages` and `scrapes` existing.
@@ -100,6 +101,26 @@ Definition:
 Role:
 - deduplicated extracted job postings
 
+## 4.5 `scrape_log_events`
+Definition:
+- PK `id` BIGINT identity
+- FK `scrape_id` -> `scrapes.id`
+- FK `career_page_id` -> `career_pages.id`
+- FK `company_id` -> `companies.id` (nullable)
+- event metadata:
+  - `worker`
+  - `event_type`
+  - `severity`
+  - `from_status`
+  - `to_status`
+  - `message`
+  - `metrics` (JSONB)
+  - `worker_run_id`
+  - `created_at`
+
+Role:
+- immutable operational event log for pipeline visibility and audit trail
+
 ---
 
 ## 5. Trigger System
@@ -132,6 +153,18 @@ Behavior:
 
 Backfill:
 - inserts `queued` scrape rows for any legacy career pages with no scrape rows.
+
+## 5.3 Scrape Status Transition Logging Trigger
+Migration:
+- `20260218123000_create_scrape_log_events.sql`
+
+Components:
+- function: `log_scrape_status_transition()`
+- trigger: `trigger_log_scrape_status_transition` (`AFTER UPDATE OF status` on `scrapes`)
+
+Behavior:
+- whenever `scrapes.status` changes, inserts one `status_transition` event into `scrape_log_events`
+- captures `from_status`, `to_status`, `scrape_id`, `career_page_id`, `company_id`, and trigger source metadata
 
 ---
 
@@ -229,6 +262,7 @@ Common writes:
 - update scrape content and status
 - fail scrape with `error_message`
 - upsert jobs
+- append structured events into `scrape_log_events`
 
 ---
 
@@ -322,4 +356,3 @@ Recovery:
 - `docs/WORKER_IMPORT_COMPANIES.md`
 - `docs/WORKER_EXTRACT_SITE_CONTENT.md`
 - `docs/WORKER_JOB_EXTRACTION.md`
-

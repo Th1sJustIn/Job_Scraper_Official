@@ -166,7 +166,12 @@ Current logs include:
 - inserted/upserted estimates
 - status updates
 
-No structured logs or metrics currently.
+Structured observability:
+- `chunk_progress` events per chunk
+- `jobs_extracted` events with `jobs_raw`/`jobs_cleaned`
+- `jobs_upserted` events with `new_jobs`/`updated_jobs`
+- `scrape_failed`/`worker_error` events on failure paths
+- DB trigger records `status_transition` events whenever `scrapes.status` changes
 
 ---
 

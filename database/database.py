@@ -48,6 +48,89 @@ def update_scrape_status(scrape_id: int, status: str):
         "status": status
     }).eq("id", scrape_id).execute()
 
+def log_scrape_event(
+    scrape_id: int,
+    worker: str,
+    event_type: str,
+    severity: str = "info",
+    message: Optional[str] = None,
+    metrics: Optional[Dict[str, Any]] = None,
+    from_status: Optional[str] = None,
+    to_status: Optional[str] = None,
+    worker_run_id: Optional[str] = None
+) -> None:
+    """
+    Persist one structured scrape event.
+    Best-effort only: logging failures must never break worker flow.
+    """
+    try:
+        scrape_response = supabase.table("scrapes")\
+            .select("career_page_id, career_pages(company_id)")\
+            .eq("id", scrape_id)\
+            .limit(1)\
+            .execute()
+
+        if not scrape_response.data:
+            return
+
+        scrape_row = scrape_response.data[0]
+        career_page_id = scrape_row.get("career_page_id")
+        company_id = None
+
+        career_page = scrape_row.get("career_pages")
+        if isinstance(career_page, dict):
+            company_id = career_page.get("company_id")
+
+        payload = {
+            "scrape_id": scrape_id,
+            "career_page_id": career_page_id,
+            "company_id": company_id,
+            "worker": worker,
+            "event_type": event_type,
+            "severity": severity,
+            "message": message,
+            "metrics": metrics or {}
+        }
+
+        if from_status is not None:
+            payload["from_status"] = from_status
+        if to_status is not None:
+            payload["to_status"] = to_status
+        if worker_run_id is not None:
+            payload["worker_run_id"] = worker_run_id
+
+        supabase.table("scrape_log_events").insert(payload).execute()
+    except Exception as e:
+        print(f"Warning: failed to persist scrape event for scrape {scrape_id}: {e}")
+
+def get_scrape_dashboard_summary() -> Dict[str, Any]:
+    """Read aggregated scrape dashboard metrics for observability UI."""
+    response = supabase.table("scrape_dashboard_live_v").select("*").limit(1).execute()
+    if response.data:
+        return response.data[0]
+    return {}
+
+def get_scrape_events(
+    scrape_id: Optional[int] = None,
+    event_type: Optional[str] = None,
+    severity: Optional[str] = None,
+    limit: int = 100
+) -> List[Dict[str, Any]]:
+    """Read scrape event feed with optional filters."""
+    query = supabase.table("scrape_event_feed_v").select("*").order("created_at", desc=True)
+
+    if scrape_id is not None:
+        query = query.eq("scrape_id", scrape_id)
+    if event_type is not None:
+        query = query.eq("event_type", event_type)
+    if severity is not None:
+        query = query.eq("severity", severity)
+    if limit is not None:
+        query = query.limit(limit)
+
+    response = query.execute()
+    return response.data
+
 from datetime import datetime, timedelta, timezone
 
 def get_latest_scrape_hash(career_page_id: int) -> Optional[str]:

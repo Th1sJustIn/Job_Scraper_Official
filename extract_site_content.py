@@ -5,7 +5,7 @@ import time
 import re
 import json
 import hashlib
-from database.database import get_career_page_url, get_career_pages, create_scrape_job, update_scrape_job, fail_scrape_job, get_latest_scrape_hash, is_recently_scraped, fetch_next_scrape_job, update_scrape_status
+from database.database import get_career_page_url, get_career_pages, create_scrape_job, update_scrape_job, fail_scrape_job, get_latest_scrape_hash, is_recently_scraped, fetch_next_scrape_job, update_scrape_status, log_scrape_event
 
 REMOVE_TAGS = [
     "script", "style", "noscript",
@@ -64,6 +64,12 @@ def process_scrape_job(scrape_job):
         try:
             url = get_career_page_url(career_page_id)
             print(f"Navigating to {url}...")
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="site_content_worker",
+                event_type="url_hit",
+                metrics={"url": url}
+            )
             
             page.goto(url)
             page.wait_for_load_state("networkidle")
@@ -87,6 +93,13 @@ def process_scrape_job(scrape_job):
             
             if last_hash and last_hash == html_hash:
                 print(f"Content unchanged (Hash match). Setting status to 'core_extracted' and skipping.")
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="heartbeat",
+                    message="Content unchanged. Skipping conversion and extraction.",
+                    metrics={"outcome": "unchanged_hash_skip"}
+                )
                 update_scrape_status(scrape_id, "core_extracted")
                 return
 
@@ -102,6 +115,17 @@ def process_scrape_job(scrape_job):
                 
                 print("Chunking content...")
                 chunks = chunk_text(markdown_content)
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="chunk_progress",
+                    message="Content chunking completed.",
+                    metrics={
+                        "chunk_index": len(chunks),
+                        "chunk_total": len(chunks),
+                        "conversion": "markdown_success"
+                    }
+                )
                 
                 print("Updating scrape job in database...")
                 update_scrape_job(
@@ -115,10 +139,26 @@ def process_scrape_job(scrape_job):
                 print("Scrape job completed successfully.")
             else:
                 print("Failed to convert content.")
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    message="Failed to convert content to markdown",
+                    metrics={"error_message": "Failed to convert content to markdown"}
+                )
                 fail_scrape_job(scrape_id, "Failed to convert content to markdown")
                 
         except Exception as e:
             print(f"An error occurred: {e}")
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="site_content_worker",
+                event_type="scrape_failed",
+                severity="error",
+                message=f"An error occurred: {e}",
+                metrics={"error_message": str(e)}
+            )
             fail_scrape_job(scrape_id, str(e))
         finally:
             browser.close()
@@ -126,6 +166,7 @@ def process_scrape_job(scrape_job):
 def run_worker():
     print("Starting site content extraction worker...")
     while True:
+        job = None
         try:
             job = fetch_next_scrape_job()
             if not job:
@@ -137,6 +178,15 @@ def run_worker():
             
         except Exception as e:
             print(f"Global worker error: {e}")
+            if job and job.get("id"):
+                log_scrape_event(
+                    scrape_id=job.get("id"),
+                    worker="site_content_worker",
+                    event_type="worker_error",
+                    severity="error",
+                    message=f"Global worker error: {e}",
+                    metrics={"error_message": str(e)}
+                )
             time.sleep(7)
 
 if __name__ == "__main__":

@@ -26,6 +26,7 @@ This file lists the current error paths that are explicitly caught in the codeba
 - `curl --fail ... /api/tags` non-zero exit (connection refused, timeout, HTTP failure)
 - Behavior:
 - logs error
+- logs structured event (`event_type="scrape_failed"`) via `log_scrape_event(...)`
 - sets scrape status via `fail_scrape_job(..., status="core_extraction_failed")`
 - sleeps 60 seconds before next loop iteration
 
@@ -34,6 +35,7 @@ This file lists the current error paths that are explicitly caught in the codeba
 - Trigger: any unhandled error during `process_scrape(scrape)`
 - Behavior:
 - logs error
+- logs structured event (`event_type="scrape_failed"`) via `log_scrape_event(...)`
 - sets scrape status via `fail_scrape_job(..., status="core_extraction_failed")`
 
 ### Global worker loop catch
@@ -41,6 +43,7 @@ This file lists the current error paths that are explicitly caught in the codeba
 - Trigger: unexpected loop-level failures (fetching jobs, unhandled runtime errors)
 - Behavior:
 - logs `Unexpected global error`
+- if scrape context exists, logs structured event (`event_type="worker_error"`) via `log_scrape_event(...)`
 - sleeps 5 seconds and continues loop
 
 ## `database/AI_connection/AI.py`
@@ -63,6 +66,7 @@ This file lists the current error paths that are explicitly caught in the codeba
 - Trigger: any error during page fetch, parsing, normalization, chunking, or DB update
 - Behavior:
 - logs error
+- logs structured event (`event_type="scrape_failed"`) via `log_scrape_event(...)`
 - marks scrape as failed via `fail_scrape_job(scrape_id, str(e))` (default status: `failed`)
 
 ### Global worker loop catch
@@ -70,7 +74,20 @@ This file lists the current error paths that are explicitly caught in the codeba
 - Trigger: unexpected loop-level failures
 - Behavior:
 - logs `Global worker error`
+- if job context exists, logs structured event (`event_type="worker_error"`) via `log_scrape_event(...)`
 - sleeps 7 seconds and continues loop
+
+## `database/database.py`
+
+### Structured event persistence catch
+- Location: `log_scrape_event(...)` `except Exception as e`
+- Trigger examples:
+- missing `scrape_log_events` relation before migration is applied
+- insert/select failures against Supabase
+- unexpected payload type/shape issues
+- Behavior:
+- logs warning: `Warning: failed to persist scrape event for scrape ...`
+- does not re-raise, preserving worker execution path
 
 ## `import_companies.py`
 
@@ -92,7 +109,8 @@ This file lists the current error paths that are explicitly caught in the codeba
 
 - `LLM connectivity check failed for .../api/tags` -> `job_extraction.py` LLM catch -> status `core_extraction_failed`, 60s sleep
 - `Error extracting jobs from AI (attempt X/2)` -> `database/AI_connection/AI.py` retry catch
-- `Error processing scrape ...` (job extraction worker) -> `job_extraction.py` per-scrape catches
+- `Error processing scrape ...` (job extraction worker) -> `job_extraction.py` per-scrape catches -> status `core_extraction_failed`
 - `Global worker error:` -> `extract_site_content.py` loop catch
 - `Unexpected global error:` -> `job_extraction.py` loop catch
+- `Warning: failed to persist scrape event for scrape ...` -> `database/database.py::log_scrape_event(...)` catch
 - `Error: File '...' not found.` -> `import_companies.py` file-not-found catch

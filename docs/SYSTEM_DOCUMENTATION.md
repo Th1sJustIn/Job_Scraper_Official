@@ -29,6 +29,7 @@ Conceptual pipeline:
 4. Content worker fetches page, cleans HTML, converts markdown, chunks text, sets status `cleaned` (or `core_extracted` when unchanged hash).
 5. Core extraction worker claims `cleaned` jobs and sets status `core_extracting`.
 6. Core extraction worker calls LLM per chunk, cleans/validates jobs, upserts into `jobs`, sets scrape status `core_extracted`.
+7. Structured observability events are written to `scrape_log_events` and surfaced through read views for dashboard/feed access.
 
 ---
 
@@ -100,6 +101,20 @@ Fields:
 
 Use:
 - Durable record of extracted openings.
+
+### 3.5 `scrape_log_events`
+Defined in: `supabase/migrations/20260218123000_create_scrape_log_events.sql`
+
+Fields:
+- `id` BIGINT PK
+- `created_at` timestamptz
+- `scrape_id`, `career_page_id`, `company_id`
+- `worker`, `event_type`, `severity`
+- `from_status`, `to_status`
+- `message`, `metrics` JSONB, `worker_run_id`
+
+Use:
+- Immutable event history for worker milestones, failures, and status transitions.
 
 ---
 
@@ -356,4 +371,3 @@ Recovery:
 - LLM request layer: `database/AI_connection/AI.py`
 - Prompt contract: `database/AI_connection/prompts.py`
 - Schema and triggers: `supabase/migrations/*.sql`
-

@@ -117,9 +117,9 @@ Known limitations:
 ## 8. Observability
 
 Current observability:
-- stdout logs only
-- no structured logging format
-- no metrics/tracing
+- stdout logs
+- structured events persisted to `scrape_log_events` via `log_scrape_event(...)`
+- status transition events persisted by DB trigger on `scrapes.status`
 
 Useful emitted values:
 - scrape ID
@@ -127,6 +127,8 @@ Useful emitted values:
 - URL
 - content hash
 - status outcomes
+- chunk totals and conversion outcome metadata
+- error messages on failure paths (`scrape_failed`, `worker_error`)
 
 ---
 
@@ -189,4 +191,3 @@ High-value improvements:
 - `docs/DATABASE_SYSTEM_DOCUMENTATION.md`
 - `docs/WORKER_IMPORT_COMPANIES.md`
 - `docs/WORKER_JOB_EXTRACTION.md`
-

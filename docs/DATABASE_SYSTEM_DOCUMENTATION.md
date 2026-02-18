@@ -305,6 +305,32 @@ Additional model for `jobs.url` worker:
 - global ATS caps and pacing enforced via row-level lock on `provider_fetch_control`
 - completion function (`complete_job_page_fetch`) releases in-flight slot and advances `jobs.content_status`
 
+### 8.1 ATS Limiter Enforcement (Job URL Worker)
+
+Source of truth:
+- `provider_fetch_control`
+
+Enforcement points:
+- claim path: `claim_next_job_page_fetch(...)`
+- release path: `complete_job_page_fetch(...)`
+
+Rules:
+1. Each URL is mapped to one `provider_bucket` via substring classifier function.
+2. Claim acquires row-level lock on that bucket in `provider_fetch_control`.
+3. Claim is rejected when:
+- `in_flight >= max_in_flight`
+- or `next_allowed_at > now()`
+4. If claim succeeds:
+- `in_flight = in_flight + 1`
+- job lock transition `jobs.content_status: open -> job_extracting`
+5. On completion:
+- `in_flight = GREATEST(in_flight - 1, 0)`
+- `next_allowed_at` is set to now plus provider delay + jitter.
+
+Operational impact:
+- Running more workers does not bypass provider limits.
+- ATS caps are globally coordinated and can be edited live in SQL.
+
 ---
 
 ## 9. Data Integrity and Deduplication

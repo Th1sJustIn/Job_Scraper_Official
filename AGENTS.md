@@ -30,10 +30,6 @@
 - Use `fix/...` for bug fixes.
 - Use `feat/...` for features.
 - Use `supabase/...` for Supabase/DB work.
-- For Codex task branches use:
-- `fix/codex/...`
-- `feat/codex/...`
-- `supabase/codex/...`
 
 9. PR title and description required
 - Every PR must include a clear, specific title.

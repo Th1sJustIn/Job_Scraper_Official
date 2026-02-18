@@ -26,10 +26,14 @@ Job claim function:
 
 Claim rules:
 1. Prefer one row where `status='queued'`.
-2. If none found, pick one row where:
+2. If none found, reclaim one stale row where:
+   - `status='extracting'`
+   - `created_at < now - 30m`
+   - stale row is moved back to `queued` and immediately reclaimed
+3. If none found, pick one row where:
    - `status='core_extracted'`
    - `created_at < now - 24h`
-3. Atomic lock update:
+4. Atomic lock update:
    - sets `status='extracting'`
    - resets `created_at` to current UTC
    - guarded by `.eq("status", original_status)` optimistic lock condition
@@ -43,10 +47,12 @@ Result:
 
 For each claimed job:
 1. Resolve `career_page_id` -> URL via `get_career_page_url`.
-2. Open Playwright Chromium (headless).
-3. Navigate to URL and wait for network idle.
-4. Sleep 5 seconds (extra page stabilization).
-5. Read full page HTML.
+2. Create browser context/page from a shared Playwright Chromium process.
+3. Navigate to URL via staged strategy:
+   - `goto(..., wait_until='domcontentloaded', timeout=45s)`
+   - best-effort `networkidle` wait (`7s` budget)
+   - selector fallback checks: `main`, `[role='main']`, `section`, `body`
+4. Read full page HTML.
 6. Compute `html_hash` (MD5).
 7. Compare with latest hash from `get_latest_scrape_hash`.
 8. If hash unchanged:
@@ -82,14 +88,17 @@ For each claimed job:
 
 Input statuses consumed:
 - `queued`
+- `extracting` (stale reclaim path older than 30 minutes)
 - `core_extracted` (older than 24h recycle path)
 
 Transitions:
 1. `queued -> extracting` (claim)
-2. `core_extracted -> extracting` (recycle claim)
-3. `extracting -> cleaned` (full successful content processing)
-4. `extracting -> core_extracted` (unchanged hash short-circuit)
-5. `extracting -> failed` (error path via `fail_scrape_job`)
+2. `extracting(stale) -> queued` (automatic reclaim)
+3. `queued -> extracting` (reclaim claim continuation)
+4. `core_extracted -> extracting` (recycle claim)
+5. `extracting -> cleaned` (full successful content processing)
+6. `extracting -> core_extracted` (unchanged hash short-circuit)
+7. `extracting -> failed` (error path via `fail_scrape_job`)
 
 Handoff:
 - `cleaned` rows are consumed by core extraction worker.
@@ -109,8 +118,7 @@ Global loop exceptions:
 
 Known limitations:
 - no retry around page navigation or markdown conversion
-- no per-stage timeout config exposed
-- hash check compares to latest scrape hash without strong state filtering logic
+- per-stage timeout values are hardcoded constants
 
 ---
 
@@ -157,8 +165,7 @@ Symptoms:
 - rows not advancing
 
 Recovery:
-- inspect old `extracting` rows
-- manually reset to `queued` for reprocessing
+- stale `extracting` rows (>30m) are reclaimed automatically by worker claim logic
 
 ---
 
@@ -172,14 +179,14 @@ Concurrency pattern:
 
 Resource profile:
 - browser-heavy
-- CPU/memory depends on page complexity and Playwright runtime
+- browser process is reused across jobs
+- browser is recycled every 100 processed jobs to limit long-run memory growth
 
 ---
 
 ## 11. Extension Points
 
 High-value improvements:
-- explicit per-site wait strategy (instead of fixed 5s sleep)
 - richer unchanged-content detection policy
 - structured logs and metrics
 - stage-specific failure statuses (e.g., `content_extraction_failed`)

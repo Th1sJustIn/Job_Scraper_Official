@@ -195,22 +195,28 @@ Legacy/default status:
 3. `core_extracted -> extracting`
    - owner: site content worker recycle claim (>24h old rows)
 
-4. `extracting -> cleaned`
+4. `extracting(stale) -> queued`
+   - owner: site content worker stale reclaim path (>30m old rows)
+
+5. `queued -> extracting`
+   - owner: site content worker reclaim continuation claim
+
+6. `extracting -> cleaned`
    - owner: site content worker successful content pipeline
 
-5. `extracting -> core_extracted`
+7. `extracting -> core_extracted`
    - owner: site content worker unchanged-hash short-circuit
 
-6. `extracting -> failed`
+8. `extracting -> failed`
    - owner: site content worker error path
 
-7. `cleaned -> core_extracting`
+9. `cleaned -> core_extracting`
    - owner: core extraction worker claim
 
-8. `core_extracting -> core_extracted`
+10. `core_extracting -> core_extracted`
    - owner: core extraction worker success path
 
-9. `core_extracting -> failed`
+11. `core_extracting -> failed`
    - owner: core extraction worker error path
 
 ### 7.2 Canonical Happy Path
@@ -232,7 +238,8 @@ Benefits:
 - avoids duplicate claims across parallel workers.
 
 Known caveat:
-- interrupted workers can leave rows stuck in in-progress states (`extracting`, `core_extracting`) without automatic timeout recovery.
+- interrupted site-content worker rows in `extracting` are automatically reclaimed when older than 30 minutes.
+- `core_extracting` rows still require manual recovery if workers crash mid-run.
 
 ---
 

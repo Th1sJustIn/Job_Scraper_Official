@@ -133,18 +133,26 @@ def get_scrape_events(
 
 from datetime import datetime, timedelta, timezone
 
-def get_latest_scrape_hash(career_page_id: int) -> Optional[str]:
-    """Get the html_hash of the latest successful scrape for a career page."""
+def get_latest_scrape_hash(
+    career_page_id: int,
+    statuses: Optional[List[str]] = None
+) -> Optional[str]:
+    """Get the most recent non-null html_hash for a career page from trusted statuses."""
+    statuses = statuses or ["cleaned", "core_extracted"]
+
     response = supabase.table("scrapes")\
         .select("html_hash")\
         .eq("career_page_id", career_page_id)\
-        .neq("html_hash", "null")\
+        .in_("status", statuses)\
         .order("created_at", desc=True)\
-        .limit(1)\
+        .limit(20)\
         .execute()
-    
+
     if response.data:
-        return response.data[0]["html_hash"]
+        for row in response.data:
+            html_hash = row.get("html_hash")
+            if isinstance(html_hash, str) and html_hash.strip():
+                return html_hash
     return None
 
 
@@ -216,13 +224,14 @@ def fetch_next_ready_job() -> Optional[dict]:
     return None
 
 
-def fetch_next_scrape_job() -> Optional[dict]:
+def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
     """
     Atomically fetches one scrape job for content extraction.
     Logic:
     1. Finds a 'queued' job.
-    2. OR finds a 'core_extracted' job older than 24 hours (recycling it).
-    3. Updates status to 'extracting' and bumps 'created_at' to now (to reset the 24h timer).
+    2. OR reclaims one stale 'extracting' job by requeueing it.
+    3. OR finds a 'core_extracted' job older than 24 hours (recycling it).
+    4. Claims selected job as 'extracting' and bumps 'created_at' to now.
     """
     now_iso = datetime.now(timezone.utc).isoformat()
     
@@ -239,24 +248,48 @@ def fetch_next_scrape_job() -> Optional[dict]:
         target_id = response.data[0]["id"]
         original_status = "queued"
     else:
-        # 2. Try 'core_extracted' > 24h
-        # We need to filter for old jobs.
-        threshold = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
-        
+        # 2. Reclaim stale 'extracting' jobs by moving them back to 'queued'
+        stale_extracting_threshold = (
+            datetime.now(timezone.utc) - timedelta(minutes=stale_extracting_minutes)
+        ).isoformat()
+
         response = supabase.table("scrapes").select("id, career_page_id")\
-            .eq("status", "core_extracted")\
-            .lt("created_at", threshold)\
+            .eq("status", "extracting")\
+            .lt("created_at", stale_extracting_threshold)\
             .limit(1)\
             .execute()
-        
+
         if response.data:
-            target_id = response.data[0]["id"]
-            original_status = "core_extracted"
+            stale_id = response.data[0]["id"]
+            reclaimed = supabase.table("scrapes").update({"status": "queued"})\
+                .eq("id", stale_id)\
+                .eq("status", "extracting")\
+                .lt("created_at", stale_extracting_threshold)\
+                .execute()
+
+            if reclaimed.data:
+                target_id = stale_id
+                original_status = "queued"
+            else:
+                target_id = None
+                original_status = None
+
+        # 3. Try 'core_extracted' > 24h
+        if not target_id:
+            threshold = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+
+            response = supabase.table("scrapes").select("id, career_page_id")\
+                .eq("status", "core_extracted")\
+                .lt("created_at", threshold)\
+                .limit(1)\
+                .execute()
+
+            if response.data:
+                target_id = response.data[0]["id"]
+                original_status = "core_extracted"
 
     if target_id:
-        # Atomic lock
-        # We update created_at to NOW so it doesn't get picked up again immediately 
-        # (effectively treating it as a new scrape)
+        # Atomic claim lock for whichever candidate path selected.
         update_payload = {
             "status": "extracting",
             "created_at": now_iso

@@ -39,3 +39,15 @@
 - Every PR must include a clear, specific title.
 - Every PR must include a structured description of what changed and why.
 - Include validation notes (what checks were run and the result).
+
+10. Documentation updates required after PR changes
+- After every PR, update the relevant documentation sections/files to match the merged code behavior.
+- Documentation updates are part of done criteria for each PR.
+
+11. Docs-first rule for fixes/features
+- For every fix or feature request, consult the relevant docs file(s) before making changes.
+- Use worker-specific docs when touching worker logic:
+- `docs/WORKER_IMPORT_COMPANIES.md`
+- `docs/WORKER_EXTRACT_SITE_CONTENT.md`
+- `docs/WORKER_JOB_EXTRACTION.md`
+- Use `docs/DATABASE_SYSTEM_DOCUMENTATION.md` when changing schema, status flow, triggers, or DB access patterns.

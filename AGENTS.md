@@ -63,3 +63,6 @@
 14. File responsibility boundaries
 - Anything dealing with database access/status updates belongs in `database/database.py`.
 - Anything dealing with AI connection/setup belongs in `database/AI_connection/AI.py`.
+
+15. Pull latest before feature/fix work
+- Before starting any feature or fix task, run `git pull` to sync latest changes.

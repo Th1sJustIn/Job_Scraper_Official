@@ -1,5 +1,5 @@
 import time
-from database.database import get_cleaned_scrapes, insert_jobs, update_scrape_status, fetch_next_ready_job, fail_scrape_job
+from database.database import get_cleaned_scrapes, insert_jobs, update_scrape_status, fetch_next_ready_job, fail_scrape_job, log_scrape_event
 from database.AI_connection.AI import extract_jobs_from_chunk
 import json
 import hashlib
@@ -183,6 +183,15 @@ def process_scrape(scrape):
     if isinstance(chunks, list):
         for i, chunk in enumerate(chunks):
             print(f"  Extracting from chunk {i+1}/{len(chunks)}...")
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="core_extraction_worker",
+                event_type="chunk_progress",
+                metrics={
+                    "chunk_index": i + 1,
+                    "chunk_total": len(chunks)
+                }
+            )
             job_listings = extract_jobs_from_chunk(chunk)
             if job_listings:
                 all_jobs.extend(job_listings)
@@ -192,6 +201,16 @@ def process_scrape(scrape):
     
     print(f"  Extracted {len(all_jobs)} raw jobs.")
     print(f"  Cleaned {len(cleaned_jobs)} valid jobs.")
+    log_scrape_event(
+        scrape_id=scrape_id,
+        worker="core_extraction_worker",
+        event_type="jobs_extracted",
+        metrics={
+            "jobs_raw": len(all_jobs),
+            "jobs_cleaned": len(cleaned_jobs),
+            "error_count": len(errors)
+        }
+    )
     
     if errors:
         print(f"  Encountered {len(errors)} errors/skips. errors: {errors}\n")
@@ -221,11 +240,21 @@ def process_scrape(scrape):
 
         print(f"  Successfully processed jobs.")
         print(f"  Stats: {new_count} New, {updated_count} Updated.")
+        log_scrape_event(
+            scrape_id=scrape_id,
+            worker="core_extraction_worker",
+            event_type="jobs_upserted",
+            metrics={
+                "new_jobs": new_count,
+                "updated_jobs": updated_count
+            }
+        )
 
 def extract_jobs():
     print("Starting job extraction worker...")
     
     while True:
+        scrape = None
         try:
             scrape = fetch_next_ready_job()
 
@@ -244,12 +273,29 @@ def extract_jobs():
                 
             except Exception as e:
                 print(f"  Error processing scrape {scrape.get('id')}: {e}")
+                log_scrape_event(
+                    scrape_id=scrape.get("id"),
+                    worker="core_extraction_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    message=f"Error processing scrape: {e}",
+                    metrics={"error_message": str(e)}
+                )
                 fail_scrape_job(scrape.get("id"), str(e))
                 print(f"  Updated scrape {scrape.get('id')} status to 'failed'.")
                 
         except Exception as e:
             # Global loop error handler to prevent crashing
             print(f"Unexpected global error: {e}")
+            if scrape and scrape.get("id"):
+                log_scrape_event(
+                    scrape_id=scrape.get("id"),
+                    worker="core_extraction_worker",
+                    event_type="worker_error",
+                    severity="error",
+                    message=f"Unexpected global error: {e}",
+                    metrics={"error_message": str(e)}
+                )
             time.sleep(5)
 
 if __name__ == "__main__":

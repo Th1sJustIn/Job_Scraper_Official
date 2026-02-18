@@ -17,6 +17,7 @@ Main components:
 - `import_companies.py`
 - `extract_site_content.py`
 - `job_extraction.py`
+- `extract_job_url_content.py`
 - `database/client.py`
 - `database/database.py`
 - `database/AI_connection/AI.py`
@@ -29,7 +30,8 @@ Conceptual pipeline:
 4. Content worker fetches page, cleans HTML, converts markdown, chunks text, sets status `cleaned` (or `core_extracted` when unchanged hash).
 5. Core extraction worker claims `cleaned` jobs and sets status `core_extracting`.
 6. Core extraction worker calls LLM per chunk, cleans/validates jobs, upserts into `jobs`, sets scrape status `core_extracted`.
-7. Structured observability events are written to `scrape_log_events` and surfaced through read views for dashboard/feed access.
+7. Job URL content worker claims `jobs` records via `jobs.content_status` lock (`open -> job_extracting`), fetches `jobs.url`, and stores content/existence results in `job_page_fetches`.
+8. Structured observability events are written to `scrape_log_events` and surfaced through read views for dashboard/feed access.
 
 ---
 
@@ -83,7 +85,9 @@ Use:
 - Queue + state machine for scrape lifecycle.
 
 ### 3.4 `jobs`
-Defined in: `supabase/migrations/20250201195600_create_jobs.sql`
+Defined in:
+- `supabase/migrations/20250201195600_create_jobs.sql`
+- `supabase/migrations/20260218180000_job_url_content_worker_system.sql`
 
 Fields:
 - `id` BIGINT PK
@@ -95,12 +99,42 @@ Fields:
 - `first_seen_at` timestamptz default now
 - `last_seen_at` timestamptz default now
 - `status` TEXT default `open`
+- `content_status` TEXT default `open` (`open|job_extracting|job_extracted`)
+- `content_status_updated_at` timestamptz default now
 - `content_hash` TEXT
 - `raw_scrape_id` BIGINT
 - Unique constraint: `(company_id, url)`
 
 Use:
 - Durable record of extracted openings.
+
+### 3.6 `job_page_fetches`
+Defined in: `supabase/migrations/20260218180000_job_url_content_worker_system.sql`
+
+Fields:
+- `id` BIGINT PK
+- `job_id` FK -> `jobs.id` (unique)
+- `job_url`, `provider_bucket`, `host`
+- status/result fields:
+  - `status` (`queued|extracting|extracted|failed|gone|blocked`)
+  - `exists_verified`, `http_status`, `final_url`, `content_type`
+  - `raw_html`, `markdown`, `html_hash`, `error_message`
+  - `worker_run_id`
+- `created_at`, `updated_at`, `extracted_at`
+
+Use:
+- Storage + state for job URL page verification/content extraction.
+
+### 3.7 `provider_fetch_control`
+Defined in: `supabase/migrations/20260218180000_job_url_content_worker_system.sql`
+
+Fields:
+- `provider_bucket` PK
+- `max_in_flight`, `base_delay_ms`, `jitter_max_ms`
+- `in_flight`, `next_allowed_at`, `last_outcome`, `updated_at`
+
+Use:
+- Global ATS throttle control editable in Supabase.
 
 ### 3.5 `scrape_log_events`
 Defined in: `supabase/migrations/20260218123000_create_scrape_log_events.sql`
@@ -163,6 +197,24 @@ Responsibilities:
 - Upsert valid jobs into `jobs` with conflict target `(company_id, url)`.
 - On success: set scrape status to `core_extracted`.
 - On exception: set scrape status to `failed` and set `error_message`.
+
+### 4.4 Job URL Content Worker (`extract_job_url_content.py`)
+
+Responsibilities:
+- Poll atomic claim function for one eligible job URL:
+  - `jobs.status='open'`
+  - `jobs.last_seen_at >= now() - 2 days`
+  - `jobs.content_status='open'`
+- Claim lock transition:
+  - `open -> job_extracting`
+- Enforce global ATS caps/delays through `provider_fetch_control`.
+- Fetch `jobs.url` with Playwright and apply existence rule:
+  - valid only if final response is `2xx` and HTML-like
+- Persist results to `job_page_fetches`.
+- Completion transition:
+  - success -> `job_extracted`
+  - first failed/gone/blocked -> `open` (single retry)
+  - second failed/gone/blocked -> mark fetch `gone` and set `jobs.status='closed'`
 
 ---
 
@@ -296,6 +348,8 @@ Typical run sequence:
    - `python3 extract_site_content.py`
 3. Start core extraction worker:
    - `python3 job_extraction.py`
+4. Start job URL content worker:
+   - `python3 extract_job_url_content.py`
 
 Recommended deployment model:
 - Run workers as independent long-running processes.

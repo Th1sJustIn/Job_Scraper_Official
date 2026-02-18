@@ -304,3 +304,71 @@ def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
             return res.data[0]
 
     return None
+
+
+def fetch_next_job_content_job(worker_run_id: str) -> Optional[dict]:
+    """
+    Atomically claims one eligible jobs.url task and locks jobs.content_status as 'job_extracting'.
+    Global ATS pacing/caps are enforced in SQL function claim_next_job_page_fetch.
+    """
+    response = supabase.rpc(
+        "claim_next_job_page_fetch",
+        {"p_worker_run_id": worker_run_id}
+    ).execute()
+
+    if response.data and len(response.data) > 0:
+        return response.data[0]
+    return None
+
+
+def complete_job_page_fetch_result(
+    fetch_id: int,
+    status: str,
+    exists_verified: bool = False,
+    http_status: Optional[int] = None,
+    final_url: Optional[str] = None,
+    content_type: Optional[str] = None,
+    raw_html: Optional[str] = None,
+    markdown: Optional[str] = None,
+    html_hash: Optional[str] = None,
+    error_message: Optional[str] = None
+) -> None:
+    """
+    Completes a claimed job_page_fetch record and releases ATS in-flight slot.
+    Also updates jobs.content_status:
+    - extracted -> job_extracted
+    - failed/gone/blocked -> open
+    """
+    supabase.rpc(
+        "complete_job_page_fetch",
+        {
+            "p_fetch_id": fetch_id,
+            "p_status": status,
+            "p_exists_verified": exists_verified,
+            "p_http_status": http_status,
+            "p_final_url": final_url,
+            "p_content_type": content_type,
+            "p_raw_html": raw_html,
+            "p_markdown": markdown,
+            "p_html_hash": html_hash,
+            "p_error_message": error_message
+        }
+    ).execute()
+
+
+def get_latest_job_page_hash(job_id: int) -> Optional[str]:
+    """Returns the latest extracted html_hash for one job URL fetch."""
+    response = supabase.table("job_page_fetches")\
+        .select("html_hash")\
+        .eq("job_id", job_id)\
+        .eq("status", "extracted")\
+        .order("updated_at", desc=True)\
+        .limit(5)\
+        .execute()
+
+    if response.data:
+        for row in response.data:
+            html_hash = row.get("html_hash")
+            if isinstance(html_hash, str) and html_hash.strip():
+                return html_hash
+    return None

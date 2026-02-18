@@ -4,10 +4,11 @@ from markdownify import markdownify as md
 import time
 import re
 import hashlib
-from database.database import (
     fetch_next_job_content_job,
     complete_job_page_fetch_result,
     get_latest_job_page_hash,
+    log_scrape_event,
+    get_job_raw_scrape_id,
 )
 
 NAV_TIMEOUT_MS = 45000
@@ -127,7 +128,27 @@ def process_job_content(claim, browser):
 
     print(f"Processing fetch_id={fetch_id}, job_id={job_id}, provider={provider_bucket}")
 
+    scrape_id = get_job_raw_scrape_id(job_id)
+    if not scrape_id:
+        print(f"Warning: could not find raw_scrape_id for job_id={job_id}")
+
     try:
+        if scrape_id:
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="site_content_worker",
+                event_type="url_hit",
+                message=f"Starting content fetch for job {job_id}",
+                metrics={
+                    "sub_worker": "job_url_content_worker",
+                    "fetch_id": fetch_id,
+                    "job_id": job_id,
+                    "provider": provider_bucket,
+                    "url": job_url,
+                    "phase": "start"
+                }
+            )
+
         context = browser.new_context(user_agent=USER_AGENT)
         page = context.new_page()
 
@@ -136,6 +157,25 @@ def process_job_content(claim, browser):
 
         if not status_code or status_code < 200 or status_code >= 300:
             completion_status = "gone" if status_code in (404, 410) else "blocked" if is_blocked(status_code, html_content) else "failed"
+            
+            error_msg = f"Non-2xx response: {status_code}"
+            
+            if scrape_id:
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    message=error_msg,
+                    metrics={
+                        "sub_worker": "job_url_content_worker",
+                        "fetch_id": fetch_id,
+                        "job_id": job_id,
+                        "status_code": status_code,
+                        "completion_status": completion_status
+                    }
+                )
+
             complete_job_page_fetch_result(
                 fetch_id=fetch_id,
                 status=completion_status,
@@ -143,11 +183,27 @@ def process_job_content(claim, browser):
                 http_status=status_code,
                 final_url=final_url,
                 content_type=content_type,
-                error_message=f"Non-2xx response: {status_code}",
+                error_message=error_msg,
             )
             return False
 
         if not looks_like_html(content_type, html_content):
+            error_msg = "Response did not look like HTML"
+            if scrape_id:
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    message=error_msg,
+                    metrics={
+                        "sub_worker": "job_url_content_worker",
+                        "fetch_id": fetch_id,
+                        "job_id": job_id,
+                        "content_type": content_type
+                    }
+                )
+
             complete_job_page_fetch_result(
                 fetch_id=fetch_id,
                 status="failed",
@@ -155,11 +211,28 @@ def process_job_content(claim, browser):
                 http_status=status_code,
                 final_url=final_url,
                 content_type=content_type,
-                error_message="Response did not look like HTML",
+                error_message=error_msg,
             )
             return False
 
         if is_blocked(status_code, html_content):
+            error_msg = "Blocked or anti-bot challenge detected"
+            if scrape_id:
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="scrape_failed",
+                    severity="warning",
+                    message=error_msg,
+                    metrics={
+                        "sub_worker": "job_url_content_worker",
+                        "fetch_id": fetch_id,
+                        "job_id": job_id,
+                        "status_code": status_code,
+                        "reason": "blocked"
+                    }
+                )
+
             complete_job_page_fetch_result(
                 fetch_id=fetch_id,
                 status="blocked",
@@ -167,7 +240,7 @@ def process_job_content(claim, browser):
                 http_status=status_code,
                 final_url=final_url,
                 content_type=content_type,
-                error_message="Blocked or anti-bot challenge detected",
+                error_message=error_msg,
             )
             return False
 
@@ -176,6 +249,20 @@ def process_job_content(claim, browser):
         last_hash = get_latest_job_page_hash(job_id)
 
         if last_hash and last_hash == html_hash:
+            if scrape_id:
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="url_hit",
+                    message="Job content fetched (unchanged)",
+                    metrics={
+                        "sub_worker": "job_url_content_worker",
+                        "fetch_id": fetch_id,
+                        "job_id": job_id,
+                        "outcome": "unchanged"
+                    }
+                )
+
             complete_job_page_fetch_result(
                 fetch_id=fetch_id,
                 status="extracted",
@@ -192,6 +279,21 @@ def process_job_content(claim, browser):
         markdown_content = md(cleaned_html, strip=["img"])
         markdown_content = normalize(markdown_content) if markdown_content else ""
 
+        if scrape_id:
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="site_content_worker",
+                event_type="url_hit",
+                message="Job content fetched and updated",
+                metrics={
+                    "sub_worker": "job_url_content_worker",
+                    "fetch_id": fetch_id,
+                    "job_id": job_id,
+                    "outcome": "updated",
+                    "content_length": len(markdown_content)
+                }
+            )
+
         complete_job_page_fetch_result(
             fetch_id=fetch_id,
             status="extracted",
@@ -207,6 +309,25 @@ def process_job_content(claim, browser):
 
     except Exception as e:
         print(f"Error for fetch_id={fetch_id}: {e}")
+        
+        if scrape_id:
+            try:
+                log_scrape_event(
+                    scrape_id=scrape_id,
+                    worker="site_content_worker",
+                    event_type="worker_error",
+                    severity="error",
+                    message=f"Exception during content fetch: {e}",
+                    metrics={
+                        "sub_worker": "job_url_content_worker",
+                        "fetch_id": fetch_id,
+                        "job_id": job_id,
+                        "error": str(e)
+                    }
+                )
+            except Exception:
+                pass
+
         complete_job_page_fetch_result(
             fetch_id=fetch_id,
             status="failed",

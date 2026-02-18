@@ -372,3 +372,10 @@ def get_latest_job_page_hash(job_id: int) -> Optional[str]:
             if isinstance(html_hash, str) and html_hash.strip():
                 return html_hash
     return None
+
+def get_job_raw_scrape_id(job_id: int) -> Optional[int]:
+    """Get the raw_scrape_id for a given job_id."""
+    response = supabase.table("jobs").select("raw_scrape_id").eq("id", job_id).limit(1).execute()
+    if response.data:
+        return response.data[0].get("raw_scrape_id")
+    return None

@@ -57,29 +57,39 @@ def log_scrape_event(
     metrics: Optional[Dict[str, Any]] = None,
     from_status: Optional[str] = None,
     to_status: Optional[str] = None,
-    worker_run_id: Optional[str] = None
+    worker_run_id: Optional[str] = None,
+    company_id: Optional[int] = None,
+    career_page_id: Optional[int] = None
 ) -> None:
     """
     Persist one structured scrape event.
     Best-effort only: logging failures must never break worker flow.
+    OPTIMIZATION: Pass company_id and career_page_id to avoid an extra DB round-trip.
     """
     try:
-        scrape_response = supabase.table("scrapes")\
-            .select("career_page_id, career_pages(company_id)")\
-            .eq("id", scrape_id)\
-            .limit(1)\
-            .execute()
+        # Resolve IDs if missing
+        if company_id is None or career_page_id is None:
+            scrape_response = supabase.table("scrapes")\
+                .select("career_page_id, career_pages(company_id)")\
+                .eq("id", scrape_id)\
+                .limit(1)\
+                .execute()
 
-        if not scrape_response.data:
-            return
+            if not scrape_response.data:
+                # Scrape ID likely invalid or gone
+                return
 
-        scrape_row = scrape_response.data[0]
-        career_page_id = scrape_row.get("career_page_id")
-        company_id = None
-
-        career_page = scrape_row.get("career_pages")
-        if isinstance(career_page, dict):
-            company_id = career_page.get("company_id")
+            scrape_row = scrape_response.data[0]
+            fetched_career_page_id = scrape_row.get("career_page_id")
+            
+            # Prefer passed-in values, fallback to fetched
+            if career_page_id is None:
+                career_page_id = fetched_career_page_id
+                
+            if company_id is None:
+                career_page = scrape_row.get("career_pages")
+                if isinstance(career_page, dict):
+                    company_id = career_page.get("company_id")
 
         payload = {
             "scrape_id": scrape_id,
@@ -199,7 +209,7 @@ def fetch_next_ready_job() -> Optional[dict]:
     Uses optimistic locking pattern.
     """
     # Fetch a candidate
-    candidates = supabase.table("scrapes").select("id, chunks_json, chunk_count, career_pages(company_id, url)")\
+    candidates = supabase.table("scrapes").select("id, career_page_id, chunks_json, chunk_count, career_pages(company_id, url)")\
         .eq("status", "cleaned")\
         .limit(1)\
         .execute()
@@ -236,7 +246,7 @@ def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
     now_iso = datetime.now(timezone.utc).isoformat()
     
     # 1. Try 'queued'
-    response = supabase.table("scrapes").select("id, career_page_id")\
+    response = supabase.table("scrapes").select("id, career_page_id, career_pages(company_id)")\
         .eq("status", "queued")\
         .limit(1)\
         .execute()
@@ -253,7 +263,7 @@ def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
             datetime.now(timezone.utc) - timedelta(minutes=stale_extracting_minutes)
         ).isoformat()
 
-        response = supabase.table("scrapes").select("id, career_page_id")\
+        response = supabase.table("scrapes").select("id, career_page_id, career_pages(company_id)")\
             .eq("status", "extracting")\
             .lt("created_at", stale_extracting_threshold)\
             .limit(1)\
@@ -278,7 +288,7 @@ def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
         if not target_id:
             threshold = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
 
-            response = supabase.table("scrapes").select("id, career_page_id")\
+            response = supabase.table("scrapes").select("id, career_page_id, career_pages(company_id)")\
                 .eq("status", "core_extracted")\
                 .lt("created_at", threshold)\
                 .limit(1)\
@@ -301,7 +311,16 @@ def fetch_next_scrape_job(stale_extracting_minutes: int = 30) -> Optional[dict]:
             .execute()
             
         if res.data:
-            return res.data[0]
+            # Return the originally fetched candidate data which contains the company_id relation
+            # The update response might strictly return attributes of the updated row (scrapes),
+            # so we merge the original relation info if needed.
+            result = res.data[0]
+            # Find the candidate object that matched target_id
+            for r in (response.data or []):
+                if r["id"] == target_id:
+                    result.update(r) # Merge in career_pages(company_id)
+                    break
+            return result
 
     return None
 
@@ -379,3 +398,87 @@ def get_job_raw_scrape_id(job_id: int) -> Optional[int]:
     if response.data:
         return response.data[0].get("raw_scrape_id")
     return None
+
+def fetch_next_description_extraction_job() -> Optional[dict]:
+    """
+    Atomically fetches one 'extracted' job_page_fetches record with markdown,
+    marks it as 'description_extracting', and returns it.
+    """
+    candidates = supabase.table("job_page_fetches").select("id, job_id, markdown")\
+        .eq("status", "extracted")\
+        .limit(10)\
+        .execute()
+
+    if not candidates.data:
+        return None
+        
+    candidate = None
+    for r in candidates.data:
+        if r.get("markdown"):
+            candidate = r
+            break
+            
+    if not candidate:
+        return None
+    
+    fetch_id = candidate["id"]
+    
+    # Attempt optimistic lock
+    response = supabase.table("job_page_fetches").update({"status": "description_extracting"})\
+        .eq("id", fetch_id)\
+        .eq("status", "extracted")\
+        .execute()
+    
+    if len(response.data) > 0:
+        return candidate
+    
+    return None
+
+def update_job_page_fetch_status(fetch_id: int, status: str, error_message: Optional[str] = None):
+    """Updates the status of a job_page_fetches record."""
+    payload = {"status": status}
+    if error_message is not None:
+        payload["error_message"] = error_message
+    supabase.table("job_page_fetches").update(payload).eq("id", fetch_id).execute()
+
+def insert_job_description(job_id: int, ai_data: dict):
+    """Upserts the AI-extracted job description into the job_descriptions table."""
+    def parse_bool(val):
+        if isinstance(val, bool):
+            return val
+        if isinstance(val, str):
+            val_lower = val.lower()
+            if val_lower in ("true", "yes", "1"):
+                return True
+            if val_lower in ("false", "no", "0"):
+                return False
+        return None
+
+    is_entry_level = parse_bool(ai_data.get("is_entry_level"))
+    internship = parse_bool(ai_data.get("internship"))
+    visa_sponsorship = parse_bool(ai_data.get("visa_sponsorship"))
+    degree_required = parse_bool(ai_data.get("degree_required"))
+
+    payload = {
+        "job_id": job_id,
+        "summary": ai_data.get("summary"),
+        "responsibilities": ai_data.get("responsibilities", []),
+        "requirements": ai_data.get("requirements", []),
+        "preferred_requirements": ai_data.get("preferred_requirements", []),
+        "tech_stack": ai_data.get("tech_stack", []),
+        "experience_level": ai_data.get("experience_level"),
+        "is_entry_level": is_entry_level,
+        "years_experience_min": ai_data.get("years_experience", {}).get("min") if isinstance(ai_data.get("years_experience"), dict) else None,
+        "years_experience_max": ai_data.get("years_experience", {}).get("max") if isinstance(ai_data.get("years_experience"), dict) else None,
+        "employment_type": ai_data.get("employment_type"),
+        "internship": internship,
+        "salary_min": ai_data.get("salary_range", {}).get("min") if isinstance(ai_data.get("salary_range"), dict) else None,
+        "salary_max": ai_data.get("salary_range", {}).get("max") if isinstance(ai_data.get("salary_range"), dict) else None,
+        "salary_currency": ai_data.get("salary_range", {}).get("currency") if isinstance(ai_data.get("salary_range"), dict) else None,
+        "visa_sponsorship": visa_sponsorship,
+        "remote_policy": ai_data.get("remote_policy"),
+        "team": ai_data.get("team"),
+        "degree_required": degree_required
+    }
+    
+    supabase.table("job_descriptions").upsert(payload).execute()

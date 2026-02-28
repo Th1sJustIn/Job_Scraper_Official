@@ -22,8 +22,9 @@
 
 7. Git/PR workflow default
 - For every coding task, branch from `dev`.
-- Implement changes on a task branch, commit, push, and open a PR with base `dev`.
-- Do this by default without separate prompts for commit/push/open PR.
+- Implement changes on a task branch.
+- Verify changes locally.
+- **WAIT** for explicit user confirmation before merging into `dev` or opening a PR.
 - Never merge PRs or move anything to `main` unless explicitly requested.
 
 8. Branch naming conventions

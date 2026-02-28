@@ -1,0 +1,4337 @@
+[
+  {
+    "company name": "Pogo",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": null
+    },
+    "company_site": "https://topstartups.io/startup/Pogo"
+  },
+  {
+    "company name": "Render",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    },
+    "company_site": "https://topstartups.io/startup/Render"
+  },
+  {
+    "company name": "Listen Labs",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$27M"
+    },
+    "company_site": "https://topstartups.io/startup/Listen+Labs"
+  },
+  {
+    "company name": "Rilla",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Rilla"
+  },
+  {
+    "company name": "Blossom",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Blossom"
+  },
+  {
+    "company name": "Adaptive Security",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$81M"
+    },
+    "company_site": "https://topstartups.io/startup/Adaptive+Security"
+  },
+  {
+    "company name": "Traba",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$45M"
+    },
+    "company_site": "https://topstartups.io/startup/Traba"
+  },
+  {
+    "company name": "Harmonic",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    },
+    "company_site": "https://topstartups.io/startup/Harmonic"
+  },
+  {
+    "company name": "Ambience Healthcare",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$243M"
+    },
+    "company_site": "https://topstartups.io/startup/Ambience+Healthcare"
+  },
+  {
+    "company name": "Tennr",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$101M"
+    },
+    "company_site": "https://topstartups.io/startup/Tennr"
+  },
+  {
+    "company name": "Kalshi",
+    "industry": "Exchanges",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$185M"
+    },
+    "company_site": "https://topstartups.io/startup/Kalshi"
+  },
+  {
+    "company name": "ClickHouse",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$350M"
+    },
+    "company_site": "https://topstartups.io/startup/ClickHouse"
+  },
+  {
+    "company name": "Statsig",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    },
+    "company_site": "https://topstartups.io/startup/Statsig"
+  },
+  {
+    "company name": "Vivodyne",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Vivodyne"
+  },
+  {
+    "company name": "NewLimit",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$130M"
+    },
+    "company_site": "https://topstartups.io/startup/NewLimit"
+  },
+  {
+    "company name": "Apex",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$200M"
+    },
+    "company_site": "https://topstartups.io/startup/Apex"
+  },
+  {
+    "company name": "Reflect Orbital",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Reflect+Orbital"
+  },
+  {
+    "company name": "Base Power",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$200M"
+    },
+    "company_site": "https://topstartups.io/startup/Base+Power"
+  },
+  {
+    "company name": "Sprinter Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$32M"
+    },
+    "company_site": "https://topstartups.io/startup/Sprinter+Health"
+  },
+  {
+    "company name": "Varda",
+    "industry": "Manufacturing",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$187M"
+    },
+    "company_site": "https://topstartups.io/startup/Varda"
+  },
+  {
+    "company name": "Ataraxis",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Ataraxis"
+  },
+  {
+    "company name": "Graphite",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$52M"
+    },
+    "company_site": "https://topstartups.io/startup/Graphite"
+  },
+  {
+    "company name": "Temporal",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$146M"
+    },
+    "company_site": "https://topstartups.io/startup/Temporal"
+  },
+  {
+    "company name": "Saronic",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$600M"
+    },
+    "company_site": "https://topstartups.io/startup/Saronic"
+  },
+  {
+    "company name": "Camber",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    },
+    "company_site": "https://topstartups.io/startup/Camber"
+  },
+  {
+    "company name": "Clay",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Clay"
+  },
+  {
+    "company name": "Graphiant",
+    "industry": "Networking",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$19M"
+    },
+    "company_site": "https://topstartups.io/startup/Graphiant"
+  },
+  {
+    "company name": "HighTouch.io",
+    "industry": "Marketing",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    },
+    "company_site": "https://topstartups.io/startup/HighTouch.io"
+  },
+  {
+    "company name": "Eclypsium",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    },
+    "company_site": "https://topstartups.io/startup/Eclypsium"
+  },
+  {
+    "company name": "Stainless",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$25M"
+    },
+    "company_site": "https://topstartups.io/startup/Stainless"
+  },
+  {
+    "company name": "Basis",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$34M"
+    },
+    "company_site": "https://topstartups.io/startup/Basis"
+  },
+  {
+    "company name": "Speak",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$78M"
+    },
+    "company_site": "https://topstartups.io/startup/Speak"
+  },
+  {
+    "company name": "Radiant",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    },
+    "company_site": "https://topstartups.io/startup/Radiant"
+  },
+  {
+    "company name": "Infinitus",
+    "industry": "Health",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$51M"
+    },
+    "company_site": "https://topstartups.io/startup/Infinitus"
+  },
+  {
+    "company name": "Nooks",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$43M"
+    },
+    "company_site": "https://topstartups.io/startup/Nooks"
+  },
+  {
+    "company name": "Decagon",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$65M"
+    },
+    "company_site": "https://topstartups.io/startup/Decagon"
+ },
+  {
+    "company name": "World Labs",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$230M"
+    },
+    "company_site": "https://topstartups.io/startup/World+Labs"
+  },
+  {
+    "company name": "Safe Superintelligence",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$1B"
+    },
+    "company_site": "https://topstartups.io/startup/Safe+Superintelligence"
+  },
+  {
+    "company name": "Atlys",
+    "industry": "Travel",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Atlys"
+  },
+  {
+    "company name": "Cortex",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    },
+    "company_site": "https://topstartups.io/startup/Cortex"
+  },
+  {
+    "company name": "Codeium",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$150M"
+    },
+    "company_site": "https://topstartups.io/startup/Codeium"
+  },
+  {
+    "company name": "Cents",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Cents"
+  },
+  {
+    "company name": "Allium",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$21M"
+    },
+    "company_site": "https://topstartups.io/startup/Allium"
+  },
+  {
+    "company name": "Ema",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$50M"
+    },
+    "company_site": "https://topstartups.io/startup/Ema"
+  },
+  {
+    "company name": "Captions",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    },
+    "company_site": "https://topstartups.io/startup/Captions"
+  },
+  {
+    "company name": "Caldera",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    },
+    "company_site": "https://topstartups.io/startup/Caldera"
+  },
+  {
+    "company name": "Coast",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Coast"
+  },
+  {
+    "company name": "Hebbia",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    },
+    "company_site": "https://topstartups.io/startup/Hebbia"
+  },
+  {
+    "company name": "Quantum Circuits",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$27M"
+    },
+    "company_site": "https://topstartups.io/startup/Quantum+Circuits"
+  },
+  {
+    "company name": "xAI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$6B"
+    },
+    "company_site": "https://topstartups.io/startup/xAI"
+  },
+  {
+    "company name": "Alkira",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$54M"
+    },
+    "company_site": "https://topstartups.io/startup/Alkira"
+  },
+  {
+    "company name": "Together",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$106M"
+    },
+    "company_site": "https://topstartups.io/startup/Together"
+  },
+  {
+    "company name": "HeyGen",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$60M"
+    },
+    "company_site": "https://topstartups.io/startup/HeyGen"
+ },
+  {
+    "company name": "Fireworks AI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$25M"
+    },
+    "company_site": "https://topstartups.io/startup/Fireworks+AI"
+  },
+  {
+    "company name": "Pomelo",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Pomelo"
+  },
+  {
+    "company name": "Cognition",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$21M"
+    },
+    "company_site": "https://topstartups.io/startup/Cognition"
+  },
+  {
+    "company name": "Ambience",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$70M"
+    },
+    "company_site": "https://topstartups.io/startup/Ambience"
+  },
+  {
+    "company name": "LangChain",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$25M"
+    },
+    "company_site": "https://topstartups.io/startup/LangChain"
+  },
+  {
+    "company name": "Hadrian",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$117M"
+    },
+    "company_site": "https://topstartups.io/startup/Hadrian"
+  },
+  {
+    "company name": "Watershed",
+    "industry": "Sustainability",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    },
+    "company_site": "https://topstartups.io/startup/Watershed"
+  },
+  {
+    "company name": "DUST Identity",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/DUST+Identity"
+  },
+  {
+    "company name": "Pika",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$35M"
+    },
+    "company_site": "https://topstartups.io/startup/Pika"
+  },
+  {
+    "company name": "Air Space Intelligence",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$34M"
+    },
+    "company_site": "https://topstartups.io/startup/Air+Space+Intelligence"
+  },
+  {
+    "company name": "Squint",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    },
+    "company_site": "https://topstartups.io/startup/Squint"
+  },
+  {
+    "company name": "Instabase",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    },
+    "company_site": "https://topstartups.io/startup/Instabase"
+  },
+  {
+    "company name": "Axoni",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Axoni"
+  },
+  {
+    "company name": "Replit",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$97M"
+    },
+    "company_site": "https://topstartups.io/startup/Replit"
+  },
+  {
+    "company name": "Memora Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    },
+    "company_site": "https://topstartups.io/startup/Memora+Health"
+  },
+  {
+    "company name": "Mojo Vision",
+    "industry": "Consumer Electronics",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$22M"
+    },
+    "company_site": "https://topstartups.io/startup/Mojo+Vision"
+  },
+  {
+    "company name": "dashbot.io",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    },
+    "company_site": "https://topstartups.io/startup/dashbot.io"
+  },
+  {
+    "company name": "Zus Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Zus+Health"
+  },
+  {
+    "company name": "Shef",
+    "industry": "Marketplaces",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$66M"
+    },
+    "company_site": "https://topstartups.io/startup/Shef"
+  },
+  {
+    "company name": "Light Field Lab",
+    "industry": "Entertainment",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    },
+    "company_site": "https://topstartups.io/startup/Light+Field+Lab"
+  },
+  {
+    "company name": "MindsDB",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$16M"
+    },
+    "company_site": "https://topstartups.io/startup/MindsDB"
+  },
+  {
+    "company name": "IgGenix",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/IgGenix"
+  },
+  {
+    "company name": "Mad Street Den",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$30M"
+    },
+    "company_site": "https://topstartups.io/startup/Mad+Street+Den"
+  },
+  {
+    "company name": "Asimov",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$175M"
+    },
+    "company_site": "https://topstartups.io/startup/Asimov"
+  },
+  {
+    "company name": "Synchron",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    },
+    "company_site": "https://topstartups.io/startup/Synchron"
+  },
+  {
+    "company name": "Ostro",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$45M"
+    },
+    "company_site": "https://topstartups.io/startup/Ostro"
+  },
+  {
+    "company name": "arketa",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    },
+    "company_site": "https://topstartups.io/startup/arketa"
+  },
+  {
+    "company name": "SpinLaunch",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$71M"
+    },
+    "company_site": "https://topstartups.io/startup/SpinLaunch"
+  },
+  {
+    "company name": "Fathom",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$46M"
+    },
+    "company_site": "https://topstartups.io/startup/Fathom"
+  },
+  {
+    "company name": "Atmos",
+    "industry": "Construction",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    },
+    "company_site": "https://topstartups.io/startup/Atmos"
+  },
+  {
+    "company name": "Imagine Impact",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$15M"
+    },
+    "company_site": "https://topstartups.io/startup/Imagine+Impact"
+  },
+  {
+    "company name": "AMP Robotics",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$91M"
+    },
+    "company_site": "https://topstartups.io/startup/AMP+Robotics"
+  },
+  {
+    "company name": "Landis",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Landis"
+  },
+  {
+    "company name": "Viome",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$67M"
+    },
+    "company_site": "https://topstartups.io/startup/Viome"
+  },
+  {
+    "company name": "Golden",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Golden"
+  },
+  {
+    "company name": "Workstream",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$60M"
+    },
+    "company_site": "https://topstartups.io/startup/Workstream"
+  },
+  {
+    "company name": "Kumo",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$18M"
+    },
+    "company_site": "https://topstartups.io/startup/Kumo"
+  },
+  {
+    "company name": "GlossGenius",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    },
+    "company_site": "https://topstartups.io/startup/GlossGenius"
+  },
+  {
+    "company name": "Knoetic",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    },
+    "company_site": "https://topstartups.io/startup/Knoetic"
+  },
+  {
+    "company name": "Patch",
+    "industry": "Sustainability",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$55M"
+    },
+    "company_site": "https://topstartups.io/startup/Patch"
+  },
+  {
+    "company name": "Carbyne",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$56M"
+    },
+    "company_site": "https://topstartups.io/startup/Carbyne"
+  },
+  {
+    "company name": "Ori",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/Ori"
+  },
+  {
+    "company name": "Isovalent",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    },
+    "company_site": "https://topstartups.io/startup/Isovalent"
+  },
+  {
+    "company name": "Alloy",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$52M"
+    },
+    "company_site": "https://topstartups.io/startup/Alloy"
+  },
+  {
+    "company name": "Incredible Health",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$80M"
+    },
+    "company_site": "https://topstartups.io/startup/Incredible+Health"
+  },
+  {
+    "company name": "Truework",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    },
+    "company_site": "https://topstartups.io/startup/Truework"
+  },
+  {
+    "company name": "MarqVision",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    },
+    "company_site": "https://topstartups.io/startup/MarqVision"
+  },
+  {
+    "company name": "Sprig",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    },
+    "company_site": "https://topstartups.io/startup/Sprig"
+  },
+  {
+    "company name": "Retool",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    },
+    "company_site": "https://topstartups.io/startup/Retool"
+  },
+  {
+    "company name": "Paragon",
+    "industry": "Web Development",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    },
+    "company_site": "https://topstartups.io/startup/Paragon"
+ },
+  {
+    "company name": "CAMP4 Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Tecton.AI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "WiredScore",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Tomorrow Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Pave",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Courier",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Fountain",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Middesk",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$57M"
+    }
+  },
+  {
+    "company name": "Cambly",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Metawave",
+    "industry": "Wireless",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Belong",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Mirvie",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Vivun",
+    "industry": "Sales and Marketing",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Instabug",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$46M"
+    }
+  },
+  {
+    "company name": "Unit",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Turquoise Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Primer",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Doppler",
+    "industry": "Developer Tools",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Mutiny",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Octant Bio",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Playbook",
+    "industry": "Collaboration",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "One More Game",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "Built Robotics",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$64M"
+    }
+  },
+  {
+    "company name": "Lilt",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$55M"
+    }
+  },
+  {
+    "company name": "Ellevest",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$53M"
+    }
+  },
+  {
+    "company name": "Skiff",
+    "industry": "Collaboration",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Flock Homes",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Jeeves",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$180M"
+    }
+  },
+  {
+    "company name": "Subject",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Deepcell",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$73M"
+    }
+  },
+  {
+    "company name": "Webflow",
+    "industry": "Web Development",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$120M"
+    }
+  },
+  {
+    "company name": "SmithRx",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Hermeus",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Propel",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Disco",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Apollo.io",
+    "industry": "Lead Generation",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$110M"
+    }
+  },
+  {
+    "company name": "BillionToOne",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$125M"
+    }
+  },
+  {
+    "company name": "Fabric",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$140M"
+    }
+  },
+  {
+    "company name": "Promise",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "AnyRoad",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$47M"
+    }
+  },
+  {
+    "company name": "Secureframe",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$56M"
+    }
+  },
+  {
+    "company name": "WorkWhile",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "PopSQL",
+    "industry": "Collaboration",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "Homebound",
+    "industry": "Construction",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Wander",
+    "industry": "Travel",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Alchemy",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$200M"
+    }
+  },
+  {
+    "company name": "Census",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Mos",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Phantom",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$109M"
+    }
+  },
+  {
+    "company name": "Vesta",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+ },
+  {
+    "company name": "Compound Financial",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "CoinTracker",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Supermove",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "CaptivateIQ",
+    "industry": "Sales",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Scratchpad",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$33M"
+    }
+  },
+  {
+    "company name": "Cellino",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Culdesac",
+    "industry": "Sustainability",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Virtru",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Autograph",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$170M"
+    }
+  },
+  {
+    "company name": "Smartcar",
+    "industry": "Transportation",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$24M"
+    }
+  },
+  {
+    "company name": "Clockwise",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Merit",
+    "industry": "GovTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Wonderschool",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Envoy",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$111M"
+    }
+  },
+  {
+    "company name": "Miro",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$400M"
+    }
+  },
+  {
+    "company name": "OpenSea",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$300M"
+    }
+  },
+  {
+    "company name": "Pyka",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$37M"
+    }
+  },
+  {
+    "company name": "Tackle",
+    "industry": "Marketplaces",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Searchlight",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "SkySafe",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Papaya",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Stoke Space",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$65M"
+    }
+  },
+  {
+    "company name": "Mixhalo",
+    "industry": "Music",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$24M"
+    }
+  },
+  {
+    "company name": "Wonder Dynamics",
+    "industry": "Artificial Inteligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Robust Intelligence",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Deed",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Mio",
+    "industry": "Collaboration",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Torq",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Anyscale",
+    "industry": "Developer Platform",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "CyCognito",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Commonwealth Fusion",
+    "industry": "Sustainability",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$2B"
+    }
+  },
+  {
+    "company name": "CloudTrucks",
+    "industry": "Transportation",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$115M"
+    }
+  },
+  {
+    "company name": "Iron Fish",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$28M"
+    }
+  },
+  {
+    "company name": "Lessen",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$170M"
+    }
+  },
+  {
+    "company name": "Quince",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Conduktor",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Royal",
+    "industry": "Music",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$55M"
+    }
+  },
+  {
+    "company name": "Stytch",
+    "industry": "Developer APIs",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$90M"
+    }
+  },
+  {
+    "company name": "Fountain Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "PlanetScale",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Luxury Presence",
+    "industry": "Sales and Marketing",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Ribbon Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$44M"
+    }
+  },
+  {
+    "company name": "Netography",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Orderful",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$19M"
+    }
+  },
+  {
+    "company name": "Wrapbook",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "VergeSense",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Faraway",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$29M"
+    }
+  },
+  {
+    "company name": "Mythical Games",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$150M"
+    }
+  },
+  {
+    "company name": "Whimsical",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "UnitedMasters",
+    "industry": "Media",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$70M"
+    }
+ },
+  {
+    "company name": "Drip Capital",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "ClickUp",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$400M"
+    }
+  },
+  {
+    "company name": "Matik",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Lightship",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "All Day Kitchens",
+    "industry": "Food & Drinks",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$65M"
+    }
+  },
+  {
+    "company name": "Neural Magic",
+    "industry": "Machine Learning",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Solugen",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$350M"
+    }
+  },
+  {
+    "company name": "Osaro",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Superhuman",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Arevo",
+    "industry": "Manufacturing",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "eGenesis",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$125M"
+    }
+  },
+  {
+    "company name": "Facilio",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "WorkRamp",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Elemeno Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$7M"
+    }
+  },
+  {
+    "company name": "Zenysis",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "May Mobility",
+    "industry": "Transportation",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$111M"
+    }
+  },
+  {
+    "company name": "Tesorio",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "HyperTrack",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "KERV Interactive",
+    "industry": "Marketing",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "Nimble Pharmacy",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$34M"
+    }
+  },
+  {
+    "company name": "Notion",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$275M"
+    }
+  },
+  {
+    "company name": "Gem",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$37M"
+    }
+  },
+  {
+    "company name": "Formation Bio",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$156M"
+    }
+  },
+  {
+    "company name": "Loyal",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Misfits Market",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$85M"
+    }
+  },
+  {
+    "company name": "Stardust",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "ROME Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "GenEdit",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Elodie Games",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$32M"
+    }
+  },
+  {
+    "company name": "Rapid Robotics",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$37M"
+    }
+  },
+  {
+    "company name": "Catch&Release",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "Monad",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "Aalto",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Tabular Technologies",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": null
+    }
+  },
+  {
+    "company name": "Robocorp",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$21M"
+    }
+  },
+  {
+    "company name": "Dover",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Origin",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$56M"
+    }
+  },
+  {
+    "company name": "Coco",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Calibrate",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Jetty",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Juno",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Hipcamp",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Titan",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$58M"
+    }
+  },
+  {
+    "company name": "Doxel",
+    "industry": "Construction",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "PicsArt",
+    "industry": "Media",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "SplashLearn",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "Zomentum",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$4M"
+    }
+  },
+  {
+    "company name": "Orum",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$56M"
+    }
+  },
+  {
+    "company name": "unitQ",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Centaur Labs",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+ },
+  {
+    "company name": "Solv Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Popshop Live",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$3M"
+    }
+  },
+  {
+    "company name": "Passport",
+    "industry": "Shipping",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Moveworks",
+    "industry": "Cloud Computing",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Thrive Global",
+    "industry": "Social",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Interos",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "Neuralink",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$205M"
+    }
+  },
+  {
+    "company name": "Modern Animal",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "MakersPlace",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Connie Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "SentiLink",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$70M"
+    }
+  },
+  {
+    "company name": "CareStack",
+    "industry": "Cloud Computing",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$38M"
+    }
+  },
+  {
+    "company name": "Blameless",
+    "industry": "Developer Platforms",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Slintel",
+    "industry": "Business Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Multiply Labs",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Plate IQ",
+    "industry": "Marketing",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$160M"
+    }
+  },
+  {
+    "company name": "Lob",
+    "industry": "Developer APIs",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$79M"
+    }
+  },
+  {
+    "company name": "Cofactor Genomics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$7M"
+    }
+  },
+  {
+    "company name": "Tovala",
+    "industry": "Food & Drinks",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "SafetyWing",
+    "industry": "Freelancers",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "Flowspace",
+    "industry": "Logistics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$33M"
+    }
+  },
+  {
+    "company name": "Bot, M.D.",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Prodigal",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "Standard AI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$150M"
+    }
+  },
+  {
+    "company name": "Phiar Technologies",
+    "industry": "Autonomous Vehicles",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "SendBird",
+    "industry": "Messaging",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$221M"
+    }
+  },
+  {
+    "company name": "Memfault",
+    "industry": "Electronics",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "Nuvocargo",
+    "industry": "Logistics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Treasury Prime",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$29M"
+    }
+  },
+  {
+    "company name": "Forage",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Outschool",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$320M"
+    }
+  },
+  {
+    "company name": "Shogun",
+    "industry": "Web Development",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$37M"
+    }
+  },
+  {
+    "company name": "H1",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Curtsy",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Landed",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$1M"
+    }
+  },
+  {
+    "company name": "CrowdAI",
+    "industry": "Image Recognition",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "Ophelia",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "LegionFarm",
+    "industry": "Coaching",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "Jerry",
+    "industry": "Auto Insurance",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$28M"
+    }
+  },
+  {
+    "company name": "FightCamp",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$90M"
+    }
+  },
+  {
+    "company name": "Contraline",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Voiceops",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Carrot Fertility",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "ZenBusiness",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$200M"
+    }
+  },
+  {
+    "company name": "Wild Earth",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$23M"
+    }
+  },
+  {
+    "company name": "Teckro",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Sundae",
+    "industry": "Marketplaces",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Turing",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$87M"
+    }
+  },
+  {
+    "company name": "Literati",
+    "industry": "Media",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Eco",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$26M"
+    }
+ },
+  {
+    "company name": "Grabango",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$39M"
+    }
+  },
+  {
+    "company name": "Florence Healthcare",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Albert",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "onX",
+    "industry": "Navigation",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Centivo",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$51M"
+    }
+  },
+  {
+    "company name": "Brightwheel",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$55M"
+    }
+  },
+  {
+    "company name": "Verato",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$24M"
+    }
+  },
+  {
+    "company name": "Crosschq",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Shopmonkey",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Zoomin",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$52M"
+    }
+  },
+  {
+    "company name": "Syndio",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Coiled",
+    "industry": "Data Science",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Fold App",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Ganaz",
+    "industry": "Agriculture",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$7M"
+    }
+  },
+  {
+    "company name": "MaintainX",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$39M"
+    }
+  },
+  {
+    "company name": "Prefect",
+    "industry": "Data Science",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$32M"
+    }
+  },
+  {
+    "company name": "Manticore Games",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Modern Treasury",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$48M"
+    }
+  },
+  {
+    "company name": "BetterWorks",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$65M"
+    }
+  },
+  {
+    "company name": "Kinsa",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "Tulip Retail",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$71M"
+    }
+  },
+  {
+    "company name": "Helix",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Audius",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "Cameo",
+    "industry": "Video",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Comma.ai",
+    "industry": "Autonomous Vehicles",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Medium",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$132M"
+    }
+  },
+  {
+    "company name": "Descript",
+    "industry": "Audio Editor",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Overtime",
+    "industry": "Media",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "preset.io",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Snackpass",
+    "industry": "Restaurants",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$70M"
+    }
+  },
+  {
+    "company name": "Workboard",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$230M"
+    }
+  },
+  {
+    "company name": "Alluxio",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "insitro",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$400M"
+    }
+  },
+  {
+    "company name": "Yellow Card",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$2M"
+    }
+  },
+  {
+    "company name": "Divvy Homes",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$110M"
+    }
+  },
+  {
+    "company name": "AKASA",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$80M"
+    }
+  },
+  {
+    "company name": "Substack",
+    "industry": "Media",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$65M"
+    }
+  },
+  {
+    "company name": "Dyno Therapeutics",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "ChartHop",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$54M"
+    }
+  },
+  {
+    "company name": "Solana",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$314M"
+    }
+  },
+  {
+    "company name": "FlyHomes",
+    "industry": "Real Estate",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$169M"
+    }
+  },
+  {
+    "company name": "Singularity 6",
+    "industry": "Gaming",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Thesis",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$21M"
+    }
+  },
+  {
+    "company name": "Nobell Foods",
+    "industry": "Manufacturing",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Cape Analytics",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$44M"
+    }
+  },
+  {
+    "company name": "Kiddom",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Homebase",
+    "industry": "Human Resources",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$70M"
+    }
+  },
+  {
+    "company name": "Bungalow",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$75M"
+    }
+  },
+  {
+    "company name": "Catch",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "AttackIQ",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$44M"
+    }
+ },
+  {
+    "company name": "Abacus.AI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Eight Sleep",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$86M"
+    }
+  },
+  {
+    "company name": "Tempo",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$220M"
+    }
+  },
+  {
+    "company name": "Level",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Docbot",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$4M"
+    }
+  },
+  {
+    "company name": "Bitwise Asset Management",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$74M"
+    }
+  },
+  {
+    "company name": "lexion.ai",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Lula",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "Mighty Buildings",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "ActionIQ",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "LocoNav",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$37M"
+    }
+  },
+  {
+    "company name": "Puls",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$93M"
+    }
+  },
+  {
+    "company name": "Pendulum Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$54M"
+    }
+  },
+  {
+    "company name": "The Org",
+    "industry": "Communities",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "mmhmm",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "StrongDM",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$54M"
+    }
+  },
+  {
+    "company name": "Pilot.com",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Bigeye",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Releasehub",
+    "industry": "Developer Tools",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Vise",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$65M"
+    }
+  },
+  {
+    "company name": "Loom",
+    "industry": "Collaboration",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$130M"
+    }
+  },
+  {
+    "company name": "Physna",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$56M"
+    }
+  },
+  {
+    "company name": "Silk",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$55M"
+    }
+  },
+  {
+    "company name": "StreamSets",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$68M"
+    }
+  },
+  {
+    "company name": "Chief",
+    "industry": "Consumer Social",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "REVL",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$2M"
+    }
+  },
+  {
+    "company name": "Nova Credit",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$66M"
+    }
+  },
+  {
+    "company name": "Skydrop",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$16M"
+    }
+  },
+  {
+    "company name": "Function of Beauty",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$150M"
+    }
+  },
+  {
+    "company name": "Petcube",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "BloomTech (fka Lambda School)",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$74M"
+    }
+  },
+  {
+    "company name": "Yoshi",
+    "industry": "Transportation",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$23M"
+    }
+  },
+  {
+    "company name": "Gatsby Trading",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Universe",
+    "industry": "Web Development",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Observe.AI",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$123M"
+    }
+  },
+  {
+    "company name": "Boom Supersonic",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "FidoCure",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Meru Health",
+    "industry": "Mental Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "ADVANO",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$19M"
+    }
+  },
+  {
+    "company name": "Datree",
+    "industry": "Developer Tools",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "lucy.co",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Pelago",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "UpKeep",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Raptor Maps",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Narrator",
+    "industry": "Data Science",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "Armory",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Nabis",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Elemental Machines",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$2M"
+    }
+  },
+  {
+    "company name": "M0balytics",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Peptilogics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$35M"
+    }
+ },
+  {
+    "company name": "Coder",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Bunch",
+    "industry": "Consumer Social",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "goTenna",
+    "industry": "Electronics",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$41M"
+    }
+  },
+  {
+    "company name": "Zinier",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$90M"
+    }
+  },
+  {
+    "company name": "Motherly",
+    "industry": "Communities",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Raise (formerly HelloOffice)",
+    "industry": "Commercial Real Estate",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "AI Foundation",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Fairwords",
+    "industry": "Compliance",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$4M"
+    }
+  },
+  {
+    "company name": "LeafLink",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Raise.com",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Eden",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Cypress.io",
+    "industry": "Developer Tools",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Okera",
+    "industry": "Data Science",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Brainbase",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Netdata",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "Streamloots",
+    "industry": "Video Streaming",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "GetAccept",
+    "industry": "Sales and Marketing",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Iris Automation",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Pachyderm",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Pixie",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "BULLETIN",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Trusona",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Ripcord",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Element Analytics",
+    "industry": "Data Science",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "UJET",
+    "industry": "Customer Service",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$55M"
+    }
+  },
+  {
+    "company name": "Veem",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$31M"
+    }
+  },
+  {
+    "company name": "Feather",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Allset",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "Rigetti Computing",
+    "industry": "Hardware",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$79M"
+    }
+  },
+  {
+    "company name": "CodeCombat",
+    "industry": "Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "Very Good Security",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Sleeper",
+    "industry": "Sports",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Run The World",
+    "industry": "Events",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Journera",
+    "industry": "Travel",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "Drishti",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Silo",
+    "industry": "Agriculture",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "RideCell",
+    "industry": "Autonomous Vehicles",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Modal",
+    "industry": "Automotive",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Akash Systems",
+    "industry": "Space",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "Atomwise",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$175M"
+    }
+  },
+  {
+    "company name": "Q.bio",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Karius",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$165M"
+    }
+  },
+  {
+    "company name": "Yes Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "HeartVista",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Clear Labs",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$58M"
+    }
+  },
+  {
+    "company name": "Fernish",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Kernel",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$153M"
+    }
+  },
+  {
+    "company name": "Siolta Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Siren Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$24M"
+    }
+  },
+  {
+    "company name": "Statespace",
+    "industry": "Sports",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$44M"
+    }
+ },
+  {
+    "company name": "Uhnder",
+    "industry": "Autonomous Vehicles",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Curai Health",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$28M"
+    }
+  },
+  {
+    "company name": "SirionLabs",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$61M"
+    }
+  },
+  {
+    "company name": "Vivace Therapeutics",
+    "industry": "Biotech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Kneron",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Pony.ai",
+    "industry": "Robotics",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$267M"
+    }
+  },
+  {
+    "company name": "CleverTap",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Finix",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Empower",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Biofourmis",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$100M"
+    }
+  },
+  {
+    "company name": "Rockset",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$40M"
+    }
+  },
+  {
+    "company name": "Linear",
+    "industry": "Developer Tools",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$13M"
+    }
+  },
+  {
+    "company name": "Confident Cannabis",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$12M"
+    }
+  },
+  {
+    "company name": "MedCrypt",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "Tara Intelligence",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Tachyus",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$15M"
+    }
+  },
+  {
+    "company name": "RITUAL",
+    "industry": "Wellness",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$25M"
+    }
+  },
+  {
+    "company name": "Summersalt",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "Candid",
+    "industry": "Dental Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$63M"
+    }
+  },
+  {
+    "company name": "Restaurant365",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$128M"
+    }
+  },
+  {
+    "company name": "ManyChat",
+    "industry": "Messaging",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$18M"
+    }
+  },
+  {
+    "company name": "Blue Hexagon",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$31M"
+    }
+  },
+  {
+    "company name": "Terminal",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$17M"
+    }
+  },
+  {
+    "company name": "Kapwing",
+    "industry": "Social Media",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$2M"
+    }
+  },
+  {
+    "company name": "FabFitFun",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$84M"
+    }
+  },
+  {
+    "company name": "Reputation.com",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$150M"
+    }
+  },
+  {
+    "company name": "Castle",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$9M"
+    }
+  },
+  {
+    "company name": "Plum",
+    "industry": "Food & Drinks",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "Neurotrack",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$21M"
+    }
+  },
+  {
+    "company name": "Next Trucking",
+    "industry": "Truckers",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$97M"
+    }
+  },
+  {
+    "company name": "CB4 Analytics",
+    "industry": "Analytics",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$16M"
+    }
+  },
+  {
+    "company name": "Cobalt Robotics",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Dolls Kill",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$56M"
+    }
+  },
+  {
+    "company name": "Digital.ai",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$122M"
+    }
+  },
+  {
+    "company name": "YapStone",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$184M"
+    }
+  },
+  {
+    "company name": "Oasis Labs",
+    "industry": "Crypto",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Narvar",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Scentbird Perfumes",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "SFOX",
+    "industry": "FinTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$23M"
+    }
+  },
+  {
+    "company name": "Wallarm",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$11M"
+    }
+  },
+  {
+    "company name": "Naked Labs",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "Ara",
+    "industry": "Sales and Marketing",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Rainforest QA",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$41M"
+    }
+  },
+  {
+    "company name": "ScyllaDB",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "YourMechanic",
+    "industry": "Marketplace",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$36M"
+    }
+  },
+  {
+    "company name": "Earnin",
+    "industry": "Employee Benefits",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$190M"
+    }
+  },
+  {
+    "company name": "10% Happier",
+    "industry": "EdTech",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "indeni",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "voxelcloud",
+    "industry": "Artificial Intelligence",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$50M"
+    }
+  },
+  {
+    "company name": "Opal Labs",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$16M"
+    }
+ },
+  {
+    "company name": "Amino",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$44M"
+    }
+  },
+  {
+    "company name": "Atomist",
+    "industry": "Web Development",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "Science Exchange",
+    "industry": "Marketplaces",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$58M"
+    }
+  },
+  {
+    "company name": "Estimote",
+    "industry": "Safety",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$21M"
+    }
+  },
+  {
+    "company name": "HOOKED",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$5M"
+    }
+  },
+  {
+    "company name": "Adentro (formerly Zenreach)",
+    "industry": "Marketing Automation",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$60M"
+    }
+  },
+  {
+    "company name": "Hubble Contacts",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$34M"
+    }
+  },
+  {
+    "company name": "MealPal",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Bastille",
+    "industry": "Cybersecurity",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Nuna",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$90M"
+    }
+  },
+  {
+    "company name": "UNTUCKit",
+    "industry": "Fashion",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$30M"
+    }
+  },
+  {
+    "company name": "Soylent",
+    "industry": "Food",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$62M"
+    }
+  },
+  {
+    "company name": "Jopwell",
+    "industry": "Recruiting",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$8M"
+    }
+  },
+  {
+    "company name": "Bigscreen",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$14M"
+    }
+  },
+  {
+    "company name": "Health IQ",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$35M"
+    }
+  },
+  {
+    "company name": "Gobble",
+    "industry": "Food & Drinks",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$27M"
+    }
+  },
+  {
+    "company name": "Luka",
+    "industry": "Consumer",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "LeadGenius",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$20M"
+    }
+  },
+  {
+    "company name": "Suiteness",
+    "industry": "Travel",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$6M"
+    }
+  },
+  {
+    "company name": "Indiegogo",
+    "industry": "Crowdfunding",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$74M"
+    }
+  },
+  {
+    "company name": "Fond",
+    "industry": "SaaS",
+    "funding details": {
+      "latest_round": "Series A",
+      "amount": "$26M"
+    }
+  },
+  {
+    "company name": "Quartzy",
+    "industry": "Enterprise Software",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$22M"
+    }
+  },
+  {
+    "company name": "Kumu Networks",
+    "industry": "Mobile",
+    "funding details": {
+      "latest_round": "Series C",
+      "amount": "$45M"
+    }
+  },
+  {
+    "company name": "Grokker",
+    "industry": "Healthcare",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$7M"
+    }
+  },
+  {
+    "company name": "The One Music Group",
+    "industry": "Music",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$10M"
+    }
+  },
+  {
+    "company name": "Thanx",
+    "industry": "E-Commerce",
+    "funding details": {
+      "latest_round": "Series B",
+      "amount": "$23M"
+    }
+  }
+]

@@ -4,6 +4,7 @@ from markdownify import markdownify as md
 import time
 import re
 import hashlib
+from database.database import (
     fetch_next_job_content_job,
     complete_job_page_fetch_result,
     get_latest_job_page_hash,
@@ -119,12 +120,14 @@ def is_fatal_browser_error(error):
     return any(marker in message for marker in fatal_markers)
 
 
-def process_job_content(claim, browser):
+def process_job_content(claim, browser, worker_run_id):
     fetch_id = claim["fetch_id"]
     job_id = claim["job_id"]
     job_url = claim["job_url"]
     provider_bucket = claim["provider_bucket"]
     context = None
+    
+    start_time = time.time()
 
     print(f"Processing fetch_id={fetch_id}, job_id={job_id}, provider={provider_bucket}")
 
@@ -133,19 +136,19 @@ def process_job_content(claim, browser):
         print(f"Warning: could not find raw_scrape_id for job_id={job_id}")
 
     try:
+        # 1. Start Logging
         if scrape_id:
             log_scrape_event(
                 scrape_id=scrape_id,
                 worker="site_content_worker",
-                event_type="url_hit",
-                message=f"Starting content fetch for job {job_id}",
+                event_type="fetch_started",
+                worker_run_id=worker_run_id,
                 metrics={
-                    "sub_worker": "job_url_content_worker",
                     "fetch_id": fetch_id,
                     "job_id": job_id,
-                    "provider": provider_bucket,
                     "url": job_url,
-                    "phase": "start"
+                    "provider": provider_bucket,
+                    "attempt": 1 # We'd need to thread attempt count if we want strict accuracy, but 1 is fine for now
                 }
             )
 
@@ -153,26 +156,29 @@ def process_job_content(claim, browser):
         page = context.new_page()
 
         html_content, status_code, content_type, final_url, wait_mode = navigate_and_capture(page, job_url)
-        print(f"Hit {job_url} -> status={status_code}, wait={wait_mode}")
+        duration_ms = int((time.time() - start_time) * 1000)
+        
+        print(f"Hit {job_url} -> status={status_code}, wait={wait_mode}, duration={duration_ms}ms")
 
+        # 2. Network Error / Non-200 Logging
         if not status_code or status_code < 200 or status_code >= 300:
             completion_status = "gone" if status_code in (404, 410) else "blocked" if is_blocked(status_code, html_content) else "failed"
-            
             error_msg = f"Non-2xx response: {status_code}"
             
             if scrape_id:
                 log_scrape_event(
                     scrape_id=scrape_id,
                     worker="site_content_worker",
-                    event_type="scrape_failed",
+                    event_type="error",
                     severity="error",
+                    worker_run_id=worker_run_id,
                     message=error_msg,
                     metrics={
-                        "sub_worker": "job_url_content_worker",
-                        "fetch_id": fetch_id,
-                        "job_id": job_id,
+                        "stage": "fetch",
+                        "error_type": "http_status",
                         "status_code": status_code,
-                        "completion_status": completion_status
+                        "provider": provider_bucket,
+                        "duration_ms": duration_ms
                     }
                 )
 
@@ -193,14 +199,16 @@ def process_job_content(claim, browser):
                 log_scrape_event(
                     scrape_id=scrape_id,
                     worker="site_content_worker",
-                    event_type="scrape_failed",
+                    event_type="error",
                     severity="error",
+                    worker_run_id=worker_run_id,
                     message=error_msg,
                     metrics={
-                        "sub_worker": "job_url_content_worker",
-                        "fetch_id": fetch_id,
-                        "job_id": job_id,
-                        "content_type": content_type
+                        "stage": "validation",
+                        "error_type": "invalid_content_type",
+                        "content_type": content_type,
+                        "provider": provider_bucket,
+                        "duration_ms": duration_ms
                     }
                 )
 
@@ -221,15 +229,16 @@ def process_job_content(claim, browser):
                 log_scrape_event(
                     scrape_id=scrape_id,
                     worker="site_content_worker",
-                    event_type="scrape_failed",
+                    event_type="error",
                     severity="warning",
+                    worker_run_id=worker_run_id,
                     message=error_msg,
                     metrics={
-                        "sub_worker": "job_url_content_worker",
-                        "fetch_id": fetch_id,
-                        "job_id": job_id,
+                        "stage": "fetch",
+                        "error_type": "blocked",
                         "status_code": status_code,
-                        "reason": "blocked"
+                        "provider": provider_bucket,
+                        "duration_ms": duration_ms
                     }
                 )
 
@@ -247,22 +256,29 @@ def process_job_content(claim, browser):
         cleaned_html = clean_html(html_content)
         html_hash = hashlib.md5(cleaned_html.encode("utf-8")).hexdigest()
         last_hash = get_latest_job_page_hash(job_id)
+        hash_changed = (last_hash != html_hash)
+        
+        bytes_downloaded = len(html_content)
 
-        if last_hash and last_hash == html_hash:
-            if scrape_id:
-                log_scrape_event(
-                    scrape_id=scrape_id,
-                    worker="site_content_worker",
-                    event_type="url_hit",
-                    message="Job content fetched (unchanged)",
-                    metrics={
-                        "sub_worker": "job_url_content_worker",
-                        "fetch_id": fetch_id,
-                        "job_id": job_id,
-                        "outcome": "unchanged"
-                    }
-                )
+        # 3. Successful Fetch Log
+        if scrape_id:
+            log_scrape_event(
+                scrape_id=scrape_id,
+                worker="site_content_worker",
+                event_type="fetch_finished",
+                worker_run_id=worker_run_id,
+                metrics={
+                    "duration_ms": duration_ms,
+                    "http_status": status_code,
+                    "bytes_downloaded": bytes_downloaded,
+                    "hash_changed": hash_changed,
+                    "provider": provider_bucket,
+                    "fetch_id": fetch_id
+                }
+            )
 
+        if not hash_changed:
+             # Already extracted this exact content
             complete_job_page_fetch_result(
                 fetch_id=fetch_id,
                 status="extracted",
@@ -276,21 +292,24 @@ def process_job_content(claim, browser):
             )
             return False
 
+        # Conversion
+        conversion_start = time.time()
         markdown_content = md(cleaned_html, strip=["img"])
         markdown_content = normalize(markdown_content) if markdown_content else ""
+        conversion_duration = int((time.time() - conversion_start) * 1000)
 
+        # 4. Extraction Log (replacing 'updated')
         if scrape_id:
             log_scrape_event(
                 scrape_id=scrape_id,
                 worker="site_content_worker",
-                event_type="url_hit",
-                message="Job content fetched and updated",
+                event_type="job_description_extracted",
+                worker_run_id=worker_run_id,
                 metrics={
-                    "sub_worker": "job_url_content_worker",
-                    "fetch_id": fetch_id,
-                    "job_id": job_id,
-                    "outcome": "updated",
-                    "content_length": len(markdown_content)
+                    "duration_ms": conversion_duration,
+                    "content_length": len(markdown_content),
+                    "provider": provider_bucket,
+                    "fetch_id": fetch_id
                 }
             )
 
@@ -315,14 +334,15 @@ def process_job_content(claim, browser):
                 log_scrape_event(
                     scrape_id=scrape_id,
                     worker="site_content_worker",
-                    event_type="worker_error",
+                    event_type="error",
                     severity="error",
+                    worker_run_id=worker_run_id,
                     message=f"Exception during content fetch: {e}",
                     metrics={
-                        "sub_worker": "job_url_content_worker",
-                        "fetch_id": fetch_id,
-                        "job_id": job_id,
-                        "error": str(e)
+                        "stage": "unknown",
+                        "error_type": "exception",
+                        "error_message": str(e),
+                        "provider": provider_bucket
                     }
                 )
             except Exception:
@@ -344,6 +364,7 @@ def process_job_content(claim, browser):
 
 
 def run_worker():
+    # Generate run ID
     worker_run_id = f"job-url-content-{int(time.time())}"
     print(f"Starting job URL content worker. run_id={worker_run_id}")
 
@@ -360,7 +381,7 @@ def run_worker():
                     time.sleep(POLL_SLEEP_SECONDS)
                     continue
 
-                restart_browser = process_job_content(claim, browser)
+                restart_browser = process_job_content(claim, browser, worker_run_id)
                 processed_since_launch += 1
 
                 if restart_browser or processed_since_launch >= BROWSER_RECYCLE_JOBS:

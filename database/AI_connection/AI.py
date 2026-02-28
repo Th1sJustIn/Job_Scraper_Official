@@ -81,3 +81,53 @@ def extract_jobs_from_chunk(chunk):
                 print("Retrying...")
     
     return []
+
+# New model for descriptions
+DESC_MODEL = "qwen2.5:7b-instruct"
+
+def extract_job_description_from_markdown(markdown_text):
+    from database.AI_connection.prompts import JOB_DESCRIPTION_EXTRACTION_PROMPT
+    formatted_prompt = JOB_DESCRIPTION_EXTRACTION_PROMPT.replace("{TEXT}", markdown_text)
+
+    for attempt in range(2):
+        if attempt == 1:
+            time.sleep(0.3)
+        try:
+            payload = {
+                "model": DESC_MODEL,
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": formatted_prompt
+                    }
+                ],
+                "stream": False,
+                "options": {
+                    "temperature": 0.1
+                }
+            }
+            res = requests.post(OLLAMA_URL, json=payload, timeout=120)
+            res.raise_for_status()
+            raw = res.json()["message"]["content"]
+            
+            # Print for test as requested
+            print(f"\n[AI Output Raw]:\n{raw[:200]}...\n")
+            
+            clean_json = raw.strip()
+            if clean_json.startswith("```json"):
+                clean_json = clean_json[7:]
+            if clean_json.startswith("```"):
+                clean_json = clean_json[3:]
+            if clean_json.endswith("```"):
+                clean_json = clean_json[:-3]
+            
+            clean_json = "".join(ch for ch in clean_json if ch == '\n' or ch == '\t' or ch >= ' ')
+
+            return json.loads(clean_json, strict=False)
+        except Exception as e:
+            print(f"Error extracting job description from AI (attempt {attempt+1}/2): {e}")
+            if attempt == 0:
+                print("Retrying...")
+    
+    return None
+

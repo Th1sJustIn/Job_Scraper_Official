@@ -98,27 +98,38 @@ def is_fatal_browser_error(error):
     )
     return any(marker in message for marker in fatal_markers)
 
-def process_scrape_job(scrape_job, browser):
+def process_scrape_job(scrape_job, browser, worker_run_id):
     scrape_id = scrape_job["id"]
     career_page_id = scrape_job["career_page_id"]
+    career_pages = scrape_job.get("career_pages")
+    company_id = career_pages.get("company_id") if isinstance(career_pages, dict) else None
     context = None
+    
+    start_time = time.time()
 
     print(f"Processing Scrape ID: {scrape_id} for Career Page ID: {career_page_id}")
 
     try:
         url = get_career_page_url(career_page_id)
+        
+        # 1. Fetch Started
+        log_scrape_event(
+            scrape_id=scrape_id,
+            company_id=company_id,
+            career_page_id=career_page_id,
+            worker="site_content_worker",
+            event_type="fetch_started",
+            worker_run_id=worker_run_id,
+            metrics={"url": url}
+        )
+        
         context = browser.new_context(user_agent=USER_AGENT)
         page = context.new_page()
 
         print(f"Navigating to {url}...")
         html_content, wait_mode = navigate_and_capture_html(page, url)
-
-        log_scrape_event(
-            scrape_id=scrape_id,
-            worker="site_content_worker",
-            event_type="url_hit",
-            metrics={"url": url, "wait_mode": wait_mode}
-        )
+        
+        fetch_duration = int((time.time() - start_time) * 1000)
 
         html_hash = hashlib.md5(html_content.encode('utf-8')).hexdigest()
         print(f"Content Hash: {html_hash}")
@@ -128,27 +139,27 @@ def process_scrape_job(scrape_job, browser):
             statuses=["cleaned", "core_extracted"]
         )
         hash_match = bool(last_hash and last_hash == html_hash)
-
+        
+        # 2. Fetch Finished
         log_scrape_event(
             scrape_id=scrape_id,
+            company_id=company_id,
+            career_page_id=career_page_id,
             worker="site_content_worker",
-            event_type="heartbeat",
+            event_type="fetch_finished",
+            worker_run_id=worker_run_id,
             metrics={
-                "last_hash_present": bool(last_hash),
-                "hash_match": hash_match,
+                "duration_ms": fetch_duration,
+                "http_status": 200, # Approximation since navigate_and_capture_html doesn't return status yet, but successful nav implies 200-ish
+                "bytes_downloaded": len(html_content),
+                "hash_changed": not hash_match,
                 "wait_mode": wait_mode
             }
         )
 
         if hash_match:
             print("Content unchanged (Hash match). Setting status to 'core_extracted' and skipping.")
-            log_scrape_event(
-                scrape_id=scrape_id,
-                worker="site_content_worker",
-                event_type="heartbeat",
-                message="Content unchanged. Skipping conversion and extraction.",
-                metrics={"outcome": "unchanged_hash_skip", "wait_mode": wait_mode}
-            )
+            # No heartbeat here, just transition status
             update_scrape_status(scrape_id, "core_extracted")
             return False
 
@@ -164,10 +175,15 @@ def process_scrape_job(scrape_job, browser):
 
             print("Chunking content...")
             chunks = chunk_text(markdown_content)
+            
+            # 3. Chunking/Process Log
             log_scrape_event(
                 scrape_id=scrape_id,
+                company_id=company_id,
+                career_page_id=career_page_id,
                 worker="site_content_worker",
                 event_type="chunking_completed",
+                worker_run_id=worker_run_id,
                 message="Content chunking completed.",
                 metrics={
                     "chunk_total": len(chunks),
@@ -190,11 +206,14 @@ def process_scrape_job(scrape_job, browser):
         print("Failed to convert content.")
         log_scrape_event(
             scrape_id=scrape_id,
+            company_id=company_id,
+            career_page_id=career_page_id,
             worker="site_content_worker",
-            event_type="scrape_failed",
+            event_type="error",
             severity="error",
+            worker_run_id=worker_run_id,
             message="Failed to convert content to markdown",
-            metrics={"error_message": "Failed to convert content to markdown"}
+            metrics={"error_type": "markdown_conversion_failed"}
         )
         fail_scrape_job(scrape_id, "Failed to convert content to markdown")
         return False
@@ -203,11 +222,14 @@ def process_scrape_job(scrape_job, browser):
         print(f"An error occurred: {e}")
         log_scrape_event(
             scrape_id=scrape_id,
+            company_id=company_id,
+            career_page_id=career_page_id,
             worker="site_content_worker",
-            event_type="scrape_failed",
+            event_type="error",
             severity="error",
+            worker_run_id=worker_run_id,
             message=f"An error occurred: {e}",
-            metrics={"error_message": str(e)}
+            metrics={"error_message": str(e), "error_type": "exception"}
         )
         fail_scrape_job(scrape_id, str(e))
         return is_fatal_browser_error(e)
@@ -219,7 +241,9 @@ def process_scrape_job(scrape_job, browser):
                 pass
 
 def run_worker():
-    print("Starting site content extraction worker...")
+    worker_run_id = f"site-content-worker-{int(time.time())}"
+    print(f"Starting site content extraction worker. run_id={worker_run_id}")
+    
     with sync_playwright() as p:
         browser = launch_browser(p)
         processed_since_launch = 0
@@ -233,7 +257,7 @@ def run_worker():
                     time.sleep(7)
                     continue
 
-                restart_browser = process_scrape_job(job, browser)
+                restart_browser = process_scrape_job(job, browser, worker_run_id)
                 processed_since_launch += 1
 
                 if restart_browser or processed_since_launch >= BROWSER_RECYCLE_JOBS:
@@ -249,11 +273,16 @@ def run_worker():
             except Exception as e:
                 print(f"Global worker error: {e}")
                 if job and job.get("id"):
+                    career_pages = job.get("career_pages")
+                    company_id = career_pages.get("company_id") if isinstance(career_pages, dict) else None
                     log_scrape_event(
                         scrape_id=job.get("id"),
+                        company_id=company_id,
+                        career_page_id=job.get("career_page_id"),
                         worker="site_content_worker",
                         event_type="worker_error",
                         severity="error",
+                        worker_run_id=worker_run_id,
                         message=f"Global worker error: {e}",
                         metrics={"error_message": str(e)}
                     )

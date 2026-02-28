@@ -1,6 +1,10 @@
 import time
-from database.database import get_cleaned_scrapes, insert_jobs, update_scrape_status, fetch_next_ready_job, fail_scrape_job
-from database.AI_connection.AI import extract_jobs_from_chunk
+from database.database import get_cleaned_scrapes, insert_jobs, update_scrape_status, fetch_next_ready_job, fail_scrape_job, log_scrape_event
+from database.AI_connection.AI import (
+    extract_jobs_from_chunk,
+    ensure_llm_server_available,
+    LLMConnectionError,
+)
 import json
 import hashlib
 
@@ -159,11 +163,12 @@ def clean_jobs(ai_results, company_id, scrape_id, base_url):
     
     return cleaned, error_messages
 
-def process_scrape(scrape):
+def process_scrape(scrape, worker_run_id):
     scrape_id = scrape.get("id")
     chunk_count = scrape.get("chunk_count")
     chunks = scrape.get("chunks_json")
     
+    career_page_id = scrape.get("career_page_id")
     # Get company_id safe access
     career_pages = scrape.get("career_pages") or {}
     company_id = career_pages.get("company_id")
@@ -177,13 +182,38 @@ def process_scrape(scrape):
 
     print(f"\nProcessing Scrape ID: {scrape_id} (Company ID: {company_id})")
     print(f"Chunk Count: {chunk_count}")
+
+    ensure_llm_server_available()
     
     all_jobs = []
     
     if isinstance(chunks, list):
         for i, chunk in enumerate(chunks):
             print(f"  Extracting from chunk {i+1}/{len(chunks)}...")
+            
+            # AI Extraction Step
+            ai_start = time.time()
             job_listings = extract_jobs_from_chunk(chunk)
+            ai_duration = int((time.time() - ai_start) * 1000)
+            
+            # Log AI Extraction
+            log_scrape_event(
+                scrape_id=scrape_id,
+                company_id=company_id,
+                career_page_id=career_page_id,
+                worker="core_extraction_worker",
+                event_type="ai_extraction_finished",
+                worker_run_id=worker_run_id,
+                metrics={
+                    "duration_ms": ai_duration,
+                    "chunk_index": i + 1,
+                    "chunk_total": len(chunks),
+                    "jobs_found": len(job_listings) if job_listings else 0,
+                    "model": "gemini-2.0-flash", # Hardcoded for now as per system
+                    "json_valid": bool(job_listings is not None)
+                }
+            )
+            
             if job_listings:
                 all_jobs.extend(job_listings)
     
@@ -192,6 +222,21 @@ def process_scrape(scrape):
     
     print(f"  Extracted {len(all_jobs)} raw jobs.")
     print(f"  Cleaned {len(cleaned_jobs)} valid jobs.")
+    
+    # Keeping jobs_extracted as a summary event
+    log_scrape_event(
+        scrape_id=scrape_id,
+        company_id=company_id,
+        career_page_id=career_page_id,
+        worker="core_extraction_worker",
+        event_type="jobs_extracted",
+        worker_run_id=worker_run_id,
+        metrics={
+            "jobs_raw": len(all_jobs),
+            "jobs_cleaned": len(cleaned_jobs),
+            "error_count": len(errors)
+        }
+    )
     
     if errors:
         print(f"  Encountered {len(errors)} errors/skips. errors: {errors}\n")
@@ -221,11 +266,25 @@ def process_scrape(scrape):
 
         print(f"  Successfully processed jobs.")
         print(f"  Stats: {new_count} New, {updated_count} Updated.")
+        log_scrape_event(
+            scrape_id=scrape_id,
+            company_id=company_id,
+            career_page_id=career_page_id,
+            worker="core_extraction_worker",
+            event_type="jobs_upserted",
+            worker_run_id=worker_run_id,
+            metrics={
+                "new_jobs": new_count,
+                "updated_jobs": updated_count
+            }
+        )
 
 def extract_jobs():
-    print("Starting job extraction worker...")
+    worker_run_id = f"core-extraction-worker-{int(time.time())}"
+    print(f"Starting job extraction worker. run_id={worker_run_id}")
     
     while True:
+        scrape = None
         try:
             scrape = fetch_next_ready_job()
 
@@ -236,20 +295,63 @@ def extract_jobs():
             
             # We have a lock on this scrape now, processing...
             try:
-                process_scrape(scrape)
+                process_scrape(scrape, worker_run_id)
                 
                 # Success
                 update_scrape_status(scrape.get("id"), "core_extracted")
                 print(f"  Updated scrape {scrape.get('id')} status to 'core_extracted'.")
-                
+
+            except LLMConnectionError as e:
+                print(f"  Error processing scrape {scrape.get('id')}: {e}")
+                log_scrape_event(
+                    scrape_id=scrape.get("id"),
+                    company_id=scrape.get("career_pages", {}).get("company_id"),
+                    career_page_id=scrape.get("career_page_id"),
+                    worker="core_extraction_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    worker_run_id=worker_run_id,
+                    message=f"LLM connection error: {e}",
+                    metrics={"error_message": str(e), "error_type": "llm_connection"}
+                )
+                fail_scrape_job(scrape.get("id"), str(e), status="core_extraction_failed")
+                print(f"  Updated scrape {scrape.get('id')} status to 'core_extraction_failed'.")
+                print("  LLM check failed. Sleeping 60 seconds before next run.")
+                time.sleep(60)
+
             except Exception as e:
                 print(f"  Error processing scrape {scrape.get('id')}: {e}")
-                fail_scrape_job(scrape.get("id"), str(e))
-                print(f"  Updated scrape {scrape.get('id')} status to 'failed'.")
+                log_scrape_event(
+                    scrape_id=scrape.get("id"),
+                    company_id=scrape.get("career_pages", {}).get("company_id"),
+                    career_page_id=scrape.get("career_page_id"),
+                    worker="core_extraction_worker",
+                    event_type="scrape_failed",
+                    severity="error",
+                    worker_run_id=worker_run_id,
+                    message=f"Error processing scrape: {e}",
+                    metrics={"error_message": str(e), "error_type": "exception"}
+                )
+                fail_scrape_job(scrape.get("id"), str(e), status="core_extraction_failed")
+                print(f"  Updated scrape {scrape.get('id')} status to 'core_extraction_failed'.")
                 
         except Exception as e:
             # Global loop error handler to prevent crashing
             print(f"Unexpected global error: {e}")
+            if scrape and scrape.get("id"):
+                career_pages = scrape.get("career_pages")
+                company_id = career_pages.get("company_id") if isinstance(career_pages, dict) else None
+                log_scrape_event(
+                    scrape_id=scrape.get("id"),
+                    company_id=company_id,
+                    career_page_id=scrape.get("career_page_id"),
+                    worker="core_extraction_worker",
+                    event_type="worker_error",
+                    severity="error",
+                    worker_run_id=worker_run_id,
+                    message=f"Unexpected global error: {e}",
+                    metrics={"error_message": str(e)}
+                )
             time.sleep(5)
 
 if __name__ == "__main__":

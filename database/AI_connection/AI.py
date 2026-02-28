@@ -1,4 +1,4 @@
-
+import os
 import ollama
 import json
 from database.AI_connection.prompts import JOB_EXTRACTION_PROMPT
@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 MODEL = "qwen2.5:3b"
 # MODEL = "qwen2.5:7b-instruct"
 
-OLLAMA_URL = " http://192.168.1.248:11434/api/chat"
+OLLAMA_URL = os.environ.get("OLLAMA_URL")
 
 
 class LLMConnectionError(Exception):

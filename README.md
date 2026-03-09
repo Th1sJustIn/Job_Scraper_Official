@@ -27,14 +27,12 @@ M2 goal is to prove viability of data acquisition, persistent storage, and pipel
 ## Repository Structure
 ```text
 project/
-  config/                 # optional future config directory
-  src/                    # optional future package layout (planned)
+  src/                    
   database/
     AI_connection/
     client.py
     database.py
   docs/
-    m2_evidence/
   supabase/
     migrations/
   import_companies.py

@@ -94,30 +94,6 @@ Run job-url content worker:
 python extract_job_url_content.py
 ```
 
-## M2 Validation Commands
-Syntax validation:
-```bash
-./venv/bin/python -m py_compile \
-  import_companies.py \
-  extract_site_content.py \
-  job_extraction.py \
-  extract_job_url_content.py \
-  database/client.py \
-  database/database.py \
-  database/AI_connection/AI.py
-```
-
-Read-only Supabase persistence check:
-```bash
-./venv/bin/python - <<'PY'
-from database.client import get_supabase_client
-c=get_supabase_client()
-for t in ['career_pages','scrapes','jobs']:
-    r=c.table(t).select('id', count='exact').limit(1).execute()
-    print(t, r.count)
-PY
-```
-
 ## Outputs / Storage
 Primary persistent storage (Supabase):
 - `career_pages`
@@ -129,9 +105,3 @@ Primary persistent storage (Supabase):
 - Do not commit secrets/API keys.
 - Keep `.env` local and use `.env.example` for required variable names.
 - Ensure `.gitignore` excludes local credential files.
-
-## M2 Deliverable Files
-- M2 report source: `docs/M2_PROGRESS_REPORT.md`
-- M2 report PDF: `CS4265_Justin_Marshall_M2.pdf`
-- Evidence index: `docs/m2_evidence/README.md`
-- Architecture update: `docs/ARCHITECTURE_M2.md`

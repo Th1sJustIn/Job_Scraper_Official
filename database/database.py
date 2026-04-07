@@ -402,35 +402,59 @@ def get_job_raw_scrape_id(job_id: int) -> Optional[int]:
 def fetch_next_description_extraction_job() -> Optional[dict]:
     """
     Atomically fetches one 'extracted' job_page_fetches record with markdown,
-    marks it as 'description_extracting', and returns it.
+    checks if it should be skipped based on job title,
+    marks it as 'description_extracting' (if valid) or 'description_skipped' (if invalid),
+    and returns it.
     """
-    candidates = supabase.table("job_page_fetches").select("id, job_id, markdown")\
+    import re
+    
+    # Keywords that trigger a skip
+    FILTER_KEYWORDS = [
+        r'\bsenior\b', r'\bmanager\b', r'\bdirector\b', r'\blead\b', 
+        r'\bprincipal\b', r'\bhead of\b', r'\bvp\b', 
+        r'\bvice president\b', r'\bchief\b'
+    ]
+    regex = re.compile('|'.join(FILTER_KEYWORDS), re.IGNORECASE)
+
+    # Fetch candidates with job title via join
+    # Supabase join: select('*, jobs(title)')
+    candidates = supabase.table("job_page_fetches").select("id, job_id, markdown, jobs(title)")\
         .eq("status", "extracted")\
-        .limit(10)\
+        .limit(20)\
         .execute()
 
     if not candidates.data:
         return None
         
-    candidate = None
     for r in candidates.data:
-        if r.get("markdown"):
-            candidate = r
-            break
+        fetch_id = r["id"]
+        job_data = r.get("jobs")
+        title = job_data.get("title") if isinstance(job_data, dict) else ""
+        
+        if not title:
+            # Fallback if title is missing for some reason, just skip extraction for safety?
+            # Or proceed? Let's proceed if no title is found.
+            pass
+        elif regex.search(title):
+            print(f"  Filtering Job ID {r['job_id']}: '{title}' matches restricted keywords.")
+            # Mark as skipped
+            supabase.table("job_page_fetches").update({"status": "description_skipped"})\
+                .eq("id", fetch_id)\
+                .eq("status", "extracted")\
+                .execute()
+            continue
+
+        if not r.get("markdown"):
+            continue
             
-    if not candidate:
-        return None
-    
-    fetch_id = candidate["id"]
-    
-    # Attempt optimistic lock
-    response = supabase.table("job_page_fetches").update({"status": "description_extracting"})\
-        .eq("id", fetch_id)\
-        .eq("status", "extracted")\
-        .execute()
-    
-    if len(response.data) > 0:
-        return candidate
+        # Attempt optimistic lock
+        response = supabase.table("job_page_fetches").update({"status": "description_extracting"})\
+            .eq("id", fetch_id)\
+            .eq("status", "extracted")\
+            .execute()
+        
+        if len(response.data) > 0:
+            return r
     
     return None
 

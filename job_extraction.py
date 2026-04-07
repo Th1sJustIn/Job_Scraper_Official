@@ -290,6 +290,7 @@ def extract_jobs():
 
             if not scrape:
                 # No jobs ready, wait a bit
+                print("No jobs ready for core extraction. Sleeping for 5 seconds...")
                 time.sleep(5)
                 continue
             

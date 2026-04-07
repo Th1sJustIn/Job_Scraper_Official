@@ -106,7 +106,7 @@ def extract_job_description_from_markdown(markdown_text):
                     "temperature": 0.1
                 }
             }
-            res = requests.post(OLLAMA_URL, json=payload, timeout=120)
+            res = requests.post(OLLAMA_URL, json=payload, timeout=None)
             res.raise_for_status()
             raw = res.json()["message"]["content"]
             

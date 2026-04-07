@@ -21,7 +21,11 @@ def process_description_extraction(fetch_record, worker_run_id):
     if not markdown:
         raise ValueError(f"Missing markdown for fetch_id {fetch_id}")
 
+    job_data = fetch_record.get("jobs")
+    title = job_data.get("title") if isinstance(job_data, dict) else "Unknown"
+
     print(f"\nProcessing Description Extraction for Fetch ID: {fetch_id} (Job ID: {job_id})")
+    print(f"Job Title: {title}")
     print(f"Markdown length: {len(markdown)} characters")
 
     ensure_llm_server_available()

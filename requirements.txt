@@ -5,3 +5,6 @@ python-dotenv
 supabase
 ollama
 lxml
+pyspark==3.5.0
+pandas
+pyarrow

@@ -10,6 +10,14 @@ A production-grade pipeline designed to autonomously discover, crawl, and extrac
 - **Robust Orchestration**: Status-driven workers process data through discovery, scraping, and verification phases with full concurrency support.
 - **Persistent Storage**: Full audit logs and normalized relational data stored in Supabase with automated PostgreSQL triggers.
 
+## Database Previews
+### Jobs Table
+![Normalized Jobs Database](./docs/jobs_table.png)
+*Normalized schema for storing extracted job postings.*
+
+### Job Descriptions Table
+![Detailed Job Descriptions](./docs/jobs_descriptions_table.png)
+*Structured extraction of job descriptions, responsibilities, and qualifications.*
 
 ## Pipeline Components
 - `workers/import_companies.py`

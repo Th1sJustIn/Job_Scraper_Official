@@ -45,9 +45,9 @@
 11. Docs-first rule for fixes/features
 - For every fix or feature request, consult the relevant docs file(s) before making changes.
 - Use worker-specific docs when touching worker logic:
-- `docs/WORKER_IMPORT_COMPANIES.md`
+- `docs/HELPER_IMPORT_COMPANIES.md`
 - `docs/WORKER_EXTRACT_SITE_CONTENT.md`
-- `docs/WORKER_JOB_EXTRACTION.md`
+- `docs/HELPER_JOB_EXTRACTION.md`
 - Use `docs/DATABASE_SYSTEM_DOCUMENTATION.md` when changing schema, status flow, triggers, or DB access patterns.
 
 12. No unrequested scope in plans

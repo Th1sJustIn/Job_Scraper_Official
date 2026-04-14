@@ -1,0 +1,38 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+WARNING: package sun.security.action not in java.base
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by org.apache.hadoop.util.NativeCodeLoader in an unnamed module (file:/Users/justinmarshall/Library/Python/3.9/lib/python/site-packages/pyspark/jars/hadoop-client-api-3.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+26/04/10 19:40:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Checking PySpark environment...
+✅ PySpark imported successfully.
+❌ Spark initialization failed: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext.
+: java.lang.UnsupportedOperationException: getSubject is not supported
+	at java.base/javax.security.auth.Subject.getSubject(Subject.java:277)
+	at org.apache.hadoop.security.UserGroupInformation.getCurrentUser(UserGroupInformation.java:588)
+	at org.apache.spark.util.Utils$.$anonfun$getCurrentUserName$1(Utils.scala:2446)
+	at scala.Option.getOrElse(Option.scala:201)
+	at org.apache.spark.util.Utils$.getCurrentUserName(Utils.scala:2446)
+	at org.apache.spark.SparkContext.<init>(SparkContext.scala:339)
+	at org.apache.spark.api.java.JavaSparkContext.<init>(JavaSparkContext.scala:59)
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:247)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:238)
+	at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80)
+	at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:184)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:108)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+
+
+Possible issues:
+1. JAVA_HOME is not set or points to an incompatible Java version.
+2. Spark binaries are missing or corrupted.

@@ -1,4 +1,4 @@
-# Import Worker Documentation (`import_companies.py`)
+# Import Worker Documentation (`workers/import_companies.py`)
 
 ## 1. Purpose
 The import worker ingests a CSV of companies and career page URLs, ensures company records exist, inserts career page records, and relies on DB triggers to enqueue initial scrape jobs.
@@ -6,10 +6,10 @@ The import worker ingests a CSV of companies and career page URLs, ensures compa
 ---
 
 ## 2. File and Entry Point
-- Worker file: `import_companies.py`
+- Worker file: `workers/import_companies.py`
 - Main entry:
-  - `python3 import_companies.py <csv_path>`
-  - defaults to `test_companies.csv` if no path is provided
+  - `python3 workers/import_companies.py <csv_path>`
+  - defaults to `data/test_companies.csv` if no path is provided
 
 Primary function:
 - `import_companies(csv_file_path)`
@@ -133,8 +133,8 @@ Recovery:
 ## 10. Runbook
 
 Typical commands:
-- `python3 import_companies.py test_companies.csv`
-- `python3 import_companies.py startup_sites.csv`
+- `python3 workers/import_companies.py data/test_companies.csv`
+- `python3 workers/import_companies.py data/startup_sites.csv`
 
 Pre-flight:
 - confirm `.env` has Supabase credentials
@@ -161,5 +161,5 @@ Common enhancements:
 - `docs/SYSTEM_DOCUMENTATION.md`
 - `docs/DATABASE_SYSTEM_DOCUMENTATION.md`
 - `docs/WORKER_EXTRACT_SITE_CONTENT.md`
-- `docs/WORKER_JOB_EXTRACTION.md`
+- `docs/HELPER_JOB_EXTRACTION.md`
 

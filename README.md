@@ -1,45 +1,50 @@
-# Job Scraper Pipeline
+# Autonomous Job Discovery & Extraction Pipeline
 
-## Project Description
-This project ingests company career-page URLs, extracts page content, uses an LLM-assisted step to identify jobs, and stores normalized job records in Supabase.
+A production-grade pipeline designed to autonomously discover, crawl, and extract structured job data from startup career pages using LLM-assisted parsing and automated site discovery.
 
-Current milestone focus: **CS4265 Milestone 2 (M2) proof-of-concept**.
-M2 goal is to prove viability of data acquisition, persistent storage, and pipeline structure.
+![System Flowchart](./Scraper_Flow.png)
 
-## M2 Status (Current)
-- Working acquisition path: **Yes** (authenticated Supabase access + retrievable sample records)
-- Persistent storage path: **Yes** (`career_pages`, `scrapes`, `jobs` tables populated)
-- Pipeline structure in repo: **Yes** (import, extraction, storage, orchestration scripts)
-- Documentation baseline: **Updated for M2**
+## Core Capabilities
+- **Automated Discovery**: Identifies startup career pages and ATS endpoints from company names using Clearbit and DuckDuckGo fallbacks.
+- **Intelligent Extraction**: Uses LLM-assisted parsing (e.g., Qwen, GPT) to normalize unstructured HTML into clean job records.
+- **Robust Orchestration**: Status-driven workers process data through discovery, scraping, and verification phases with full concurrency support.
+- **Persistent Storage**: Full audit logs and normalized relational data stored in Supabase with automated PostgreSQL triggers.
+
 
 ## Pipeline Components
-- `import_companies.py`
+- `workers/import_companies.py`
   - Loads company + career-page URLs from CSV into Supabase.
-- `extract_site_content.py`
+- `extract_site_content.py` (Root)
   - Claims scrape jobs, fetches page HTML with Playwright, cleans/chunks content, updates `scrapes`.
-- `job_extraction.py`
+- `job_extraction.py` (Root)
   - Claims cleaned scrapes, calls LLM extraction, normalizes jobs, upserts `jobs`.
-- `extract_job_url_content.py`
+- `extract_job_url_content.py` (Root)
   - Claims open jobs, fetches job URLs, stores page existence/content outcomes.
+- `description_extraction.py` (Root)
+  - Processes job descriptions and extracts metadata.
 - `database/database.py`
   - Centralized database access and status transitions.
 
 ## Repository Structure
 ```text
 project/
-  src/                    
-  database/
+  data/                   # CSV/JSON input and output
+  database/               # Core DB logic
     AI_connection/
     client.py
     database.py
-  docs/
-  supabase/
-    migrations/
-  import_companies.py
+  debug/                  # Debugging and testing scripts
+  docs/                   # Documentation and reports
+  logs/                   # System and error logs
+  supabase/               # Migration and edge function logic
+  workers/                # Supporting background workers
   extract_site_content.py
   job_extraction.py
   extract_job_url_content.py
+  description_extraction.py
   requirements.txt
+  AGENTS.md
+  README.md
 ```
 
 ## Prerequisites
@@ -76,7 +81,7 @@ source venv/bin/activate
 
 Import companies:
 ```bash
-python import_companies.py test_companies.csv
+python workers/import_companies.py data/test_companies.csv
 ```
 
 Run site-content worker:

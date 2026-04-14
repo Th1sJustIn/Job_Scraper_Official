@@ -4,6 +4,7 @@ import time
 import argparse
 import requests
 import urllib.parse
+import os
 from bs4 import BeautifulSoup
 import re
 
@@ -95,8 +96,8 @@ def main():
     parser.add_argument("--test", action="store_true", help="Run in test mode (only process the first 5 startups).")
     args = parser.parse_args()
 
-    input_file = "startup_names.json"
-    output_file = "Startup_Urls.csv"
+    input_file = "data/startup_names.json"
+    output_file = "data/Startup_Urls.csv"
     
     try:
         with open(input_file, "r") as f:
@@ -108,7 +109,7 @@ def main():
     if args.test:
         print("Running in TEST mode. Only processing first 5 startups.")
         startups = startups[:5]
-        output_file = "Startup_Urls_Test.csv"
+        output_file = "data/Startup_Urls_Test.csv"
     
     print(f"Processing {len(startups)} startups...")
 
@@ -143,4 +144,9 @@ def main():
     print(f"\nDone! Results saved to {output_file}")
 
 if __name__ == "__main__":
+    # Ensure database module is findable if needed (though not currently used in this script)
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if parent_dir not in os.sys.path:
+        os.sys.path.insert(0, parent_dir)
+        
     main()

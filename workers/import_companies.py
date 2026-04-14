@@ -1,6 +1,7 @@
 
 import csv
 import sys
+import os
 from database.client import get_supabase_client
 
 def import_companies(csv_file_path):
@@ -86,10 +87,15 @@ def import_companies(csv_file_path):
         print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
+    # Ensure database module is findable if run directly from workers/
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if parent_dir not in sys.path:
+        sys.path.insert(0, parent_dir)
+
     if len(sys.argv) > 1:
         csv_path = sys.argv[1]
     else:
         # Default fallback usually good for dev
-        csv_path = "test_companies.csv"
+        csv_path = "data/test_companies.csv"
         
     import_companies(csv_path)

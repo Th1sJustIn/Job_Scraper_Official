@@ -4,8 +4,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from database.big_data.exporter import export_to_parquet
 
-# Spark 3/4 requires Java 8, 11, or 17. Java 24 is too new and causes Subject.getSubject errors.
-os.environ["JAVA_HOME"] = "/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home"
 
 def run_analytics():
     # Automatically sync data from Supabase first

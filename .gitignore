@@ -27,3 +27,8 @@ wheels/
 
 # MacOS
 .DS_Store
+
+# Data & Big Data Storage
+data/*
+!data/sample/
+datalake/

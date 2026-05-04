@@ -415,13 +415,46 @@ Recovery:
 
 ---
 
-## 11. File Map
+## 12. Big Data Layer
+
+This layer introduces a high-volume analytical store to complement the transactional Supabase DB.
+
+### 12.1 ETL Bridge (`database/big_data/exporter.py`)
+- **Role**: Periodic synchronization from Supabase (OLTP) to Local Data Lake (OLAP).
+- **Format**: Converts relational rows to **Parquet** format.
+- **Storage Architecture**:
+  - **Bronze**: Raw parquet files exactly matching source tables.
+  - **Gold**: Summarized analysis results from Spark.
+
+---
+
+## 13. Distributed Analytics (`analytics/spark_analytics.py`)
+
+### 13.1 Processing Engine
+- **Framework**: Apache Spark (PySpark).
+- **Infrastructure**: Master/Worker architecture (Local Mode [*]).
+
+### 13.2 Analytical Jobs
+1. **Tech Stack Popularity**: Uses Spark `explode` to normalize skill arrays and perform a global distributed count.
+2. **Salary Benchmarking**: Joins `jobs` and `job_descriptions` via Spark Shuffle Join to calculate average pay by department.
+3. **System Reliability**: Analysis of `scrape_log_events` to determine per-worker error ratios across thousands of log entries.
+
+---
+
+## 14. Related Docs
+- `docs/DATABASE_SYSTEM_DOCUMENTATION.md`
+
+---
+
+## 15. File Map
 
 - Import pipeline: `import_companies.py`
 - Content extraction worker: `extract_site_content.py`
 - Core/LLM extraction worker: `job_extraction.py`
-- DB client/env loading: `database/client.py`
+- Job URL content worker: `extract_job_url_content.py`
 - DB operations + queue locking: `database/database.py`
+- **Data Lake Exporter**: `database/big_data/exporter.py`
+- **Spark Analytics**: `analytics/spark_analytics.py`
 - LLM request layer: `database/AI_connection/AI.py`
 - Prompt contract: `database/AI_connection/prompts.py`
 - Schema and triggers: `supabase/migrations/*.sql`

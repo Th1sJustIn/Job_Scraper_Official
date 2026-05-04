@@ -1,6 +1,6 @@
-# Autonomous Job Discovery & Extraction Pipeline
+# Job Scraper & Big Data Analytics Pipeline
 
-A production-grade pipeline designed to autonomously discover, crawl, and extract structured job data from startup career pages using LLM-assisted parsing and automated site discovery.
+A production-grade pipeline designed to autonomously discover, crawl, and extract structured job data from startup career pages using LLM-assisted parsing and automated site discovery. It then performs distributed analytical processing using Apache Spark.
 
 ![System Flowchart](./Scraper_Flow.png)
 
@@ -10,37 +10,41 @@ A production-grade pipeline designed to autonomously discover, crawl, and extrac
 - **Robust Orchestration**: Status-driven workers process data through discovery, scraping, and verification phases with full concurrency support.
 - **Persistent Storage**: Full audit logs and normalized relational data stored in Supabase with automated PostgreSQL triggers.
 
-## Database Previews
-### Jobs Table
-![Normalized Jobs Database](./docs/jobs_table.png)
-*Normalized schema for storing extracted job postings.*
-
-### Job Descriptions Table
-![Detailed Job Descriptions](./docs/jobs_descriptions_table.png)
-*Structured extraction of job descriptions, responsibilities, and qualifications.*
+## M3 Status (Current)
+- **Transactional Pipeline**: Operational (Acquisition, AI Extraction, Supabase Storage).
+- **Big Data Bridge**: Implemented (Automated ETL from Supabase to Parquet Data Lake).
+- **Distributed Analytics**: Implemented (PySpark-based Tech-Stack and Salary aggregations).
+- **Data Lake Architecture**: Medallion-style (Bronze/Gold) storage implemented.
 
 ## Pipeline Components
-- `workers/import_companies.py`
-  - Loads company + career-page URLs from CSV into Supabase.
-- `extract_site_content.py` (Root)
-  - Claims scrape jobs, fetches page HTML with Playwright, cleans/chunks content, updates `scrapes`.
-- `job_extraction.py` (Root)
-  - Claims cleaned scrapes, calls LLM extraction, normalizes jobs, upserts `jobs`.
-- `extract_job_url_content.py` (Root)
-  - Claims open jobs, fetches job URLs, stores page existence/content outcomes.
-- `description_extraction.py` (Root)
-  - Processes job descriptions and extracts metadata.
-- `database/database.py`
-  - Centralized database access and status transitions.
+
+### 1. Scraping & Extraction (OLTP)
+- `workers/import_companies.py`: Loads company + career-page URLs from CSV into Supabase.
+- `extract_site_content.py`: Fetches HTML and converts to cleaned markdown chunks.
+- `job_extraction.py`: Uses LLMs to identify and normalize job listings.
+- `extract_job_url_content.py`: Verifies and fetches individual job post URLs.
+- `description_extraction.py`: Processes job descriptions and extracts metadata.
+- `database/database.py`: Centralized database access and status transitions.
+
+### 2. Big Data & Analytics (OLAP)
+- **`database/big_data/exporter.py`**: Syncs Supabase data into a local **Parquet Data Lake** (Bronze Layer) using PySpark.
+- **`analytics/spark_analytics.py`**: A **PySpark** distributed processing job.
 
 ## Repository Structure
 ```text
 project/
+  analytics/
+    spark_analytics.py      <-- Distributed Processing
   data/                   # CSV/JSON input and output
   database/               # Core DB logic
+    big_data/
+      exporter.py           <-- ETL Bridge
     AI_connection/
     client.py
     database.py
+  datalake/                 <-- Local Parquet Data Lake
+    bronze/
+    gold/
   debug/                  # Debugging and testing scripts
   docs/                   # Documentation and reports
   logs/                   # System and error logs
@@ -56,9 +60,10 @@ project/
 ```
 
 ## Prerequisites
-- Python 3.14+
-- Playwright dependencies installed
-- Supabase project URL + API key
+- **Python 3.14+**
+- **Java 11 or 17** (Required for Apache Spark)
+- **Apache Spark / PySpark 3.5.0**
+- Playwright & Supabase credentials
 
 ## Setup
 ```bash
@@ -68,53 +73,28 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-## Environment Variables
-Create a local `.env` file using `.env.example`.
-
-Required keys:
-- `SUPABASE_PROJECT_URL`
-- `SUPABASE_SECRET_KEY` or `SUPABASE_API_KEY`
-
-Optional/secondary keys:
-- `SUPABASE_DB_PASSWORD`
-- `OLLAMA_URL`
-- `GOOGLE_API_KEY`
-- `GOOGLE_CSE_ID`
-
 ## Run Commands
-Activate environment first:
-```bash
-source venv/bin/activate
-```
 
-Import companies:
+### 1. Data Ingestion & Scraping
 ```bash
 python workers/import_companies.py data/test_companies.csv
 ```
 
-Run site-content worker:
-```bash
+# Run workers (Orchestrated via Supabase status states)
 python extract_site_content.py
-```
-
-Run core job extraction worker:
-```bash
 python job_extraction.py
 ```
 
-Run job-url content worker:
+### 2. Big Data Analysis
+This single command automatically syncs the Data Lake from Supabase and runs the distributed Spark analytics:
 ```bash
-python extract_job_url_content.py
+python3 -m analytics.spark_analytics
 ```
 
 ## Outputs / Storage
-Primary persistent storage (Supabase):
-- `career_pages`
-- `scrapes`
-- `jobs`
-- `job_page_fetches`
+- **Transactional (Supabase)**: `companies`, `career_pages`, `scrapes`, `jobs`, `scrape_log_events`.
+- **Analytical (Parquet)**: Columnar storage in `datalake/` for high-volume distributed access.
 
-## Security Notes
-- Do not commit secrets/API keys.
-- Keep `.env` local and use `.env.example` for required variable names.
-- Ensure `.gitignore` excludes local credential files.
+## Security
+- Secrets are managed via `.env` (excluded from git).
+- All Big Data processing is local-mode to ensure data privacy.
